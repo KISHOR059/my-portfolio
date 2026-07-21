@@ -9,7 +9,7 @@ import { portfolio } from "@/data/portfolio";
 export function Timeline() {
   return (
     <section id="experience" className="section-shell scroll-mt-20">
-      <Reveal><SectionHeading eyebrow="04 / Experience" title="A journey of building, learning, and shipping." description="Growing through hands-on product work, collaborative teams, and increasingly ambitious technical challenges." /></Reveal>
+      <Reveal><SectionHeading eyebrow="04 / Professional experience" title="Building national-scale infrastructure systems." description="Hands-on engineering experience across Laravel platforms, GIS visualization, telecom operations, and integrated web and mobile systems." /></Reveal>
       <div className="relative mx-auto max-w-4xl">
         <div className="absolute bottom-6 left-[17px] top-6 w-px bg-gradient-to-b from-violet-500 via-blue-500/60 to-transparent sm:left-1/2" />
         {portfolio.experience.map((experience, index) => (
@@ -20,6 +20,7 @@ export function Timeline() {
                   <p className="font-mono text-[11px] font-medium uppercase tracking-[.16em] text-cyan-300">{experience.period}</p>
                   <h3 className="mt-3 text-xl font-bold text-white">{experience.role}</h3>
                   <p className="mt-1 text-sm font-medium text-violet-300">{experience.company}</p>
+                  <p className="mt-2 text-xs font-semibold text-cyan-300">Project: {experience.project}</p>
                   <p className="mt-4 text-sm leading-6 text-slate-400">{experience.description}</p>
                   <div className={"mt-5 flex flex-wrap gap-2 " + (index % 2 ? "" : "sm:justify-end")}>
                     {experience.highlights.map((highlight) => <span key={highlight} className="inline-flex items-center gap-1.5 text-[10px] text-slate-400"><Check className="size-3 text-emerald-400" />{highlight}</span>)}

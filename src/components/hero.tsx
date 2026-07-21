@@ -24,7 +24,7 @@ export function Hero() {
         <motion.div initial="hidden" animate="visible" transition={{ delayChildren: 0.12, staggerChildren: 0.095 }} className="relative z-10 max-w-2xl">
           <motion.div variants={item} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} className="mb-6 inline-flex items-center gap-2 overflow-hidden rounded-full border border-violet-400/20 bg-violet-500/[.08] px-3.5 py-2 text-xs font-medium text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,.06),0_0_30px_rgba(124,58,237,.1)] backdrop-blur-xl">
             <motion.span animate={reducedMotion ? undefined : { rotate: [0, 14, -10, 0], scale: [1, 1.2, 1] }} transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }}><Sparkles className="size-3.5 text-cyan-300" /></motion.span>
-            Welcome to my portfolio
+            Engineering Ideas Into Impact
             <motion.span className="ml-1 h-3 w-px bg-gradient-to-b from-transparent via-white/70 to-transparent" animate={reducedMotion ? undefined : { x: [-120, 150] }} transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 2 }} />
           </motion.div>
 

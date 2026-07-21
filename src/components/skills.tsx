@@ -21,7 +21,7 @@ export function Skills() {
                 <div className="absolute -right-12 -top-12 size-36 rounded-full bg-violet-600/0 blur-3xl transition-colors duration-500 group-hover:bg-violet-600/20" />
                 <div className="relative flex items-center gap-4">
                   <div className="grid size-12 place-items-center rounded-2xl border border-violet-400/20 bg-violet-500/10 text-violet-300 shadow-[0_0_22px_rgba(124,58,237,.12)] transition-colors group-hover:border-cyan-300/30 group-hover:text-cyan-300"><Icon className="size-5" /></div>
-                  <div><p className="text-xs font-medium uppercase tracking-[.2em] text-slate-500">Category</p><h3 className="mt-1 text-lg font-bold text-white">{group.category}</h3></div>
+                  <div><h3 className="text-lg font-bold text-white">{group.category}</h3></div>
                 </div>
                 <div className="relative mt-6 flex flex-wrap gap-2">
                   {group.skills.map((skill) => <span key={skill} className="rounded-full border border-white/[.07] bg-white/[.035] px-3 py-1.5 text-xs text-slate-300 transition-colors group-hover:border-white/10 group-hover:text-white">{skill}</span>)}

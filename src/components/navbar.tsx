@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { ContactRound as Linkedin, GitFork as Github, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { GitHubLogo, LinkedInLogo } from "@/components/brand-icons";
 import { useEffect, useState } from "react";
 import { navigation, portfolio } from "@/data/portfolio";
 import { buttonVariants } from "@/components/ui/button";
@@ -56,8 +57,8 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-1.5 lg:flex">
-          <a href={portfolio.social.github} target="_blank" rel="noreferrer" className={buttonVariants({ variant: "ghost", size: "icon" })} aria-label="GitHub"><Github className="size-4" /></a>
-          <a href={portfolio.social.linkedin} target="_blank" rel="noreferrer" className={buttonVariants({ variant: "ghost", size: "icon" })} aria-label="LinkedIn"><Linkedin className="size-4" /></a>
+          <a href={portfolio.social.github} target="_blank" rel="noreferrer" className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "group border border-transparent hover:border-white/10 hover:bg-white/[.07]")} aria-label="GitHub"><GitHubLogo className="size-[18px] text-slate-400 transition-all group-hover:scale-110 group-hover:text-white" /></a>
+          <a href={portfolio.social.linkedin} target="_blank" rel="noreferrer" className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "group border border-transparent hover:border-blue-400/30 hover:bg-blue-500/10")} aria-label="LinkedIn"><LinkedInLogo className="size-[18px] text-slate-400 transition-all group-hover:scale-110 group-hover:text-blue-400" /></a>
           <a href={portfolio.resumeUrl} download className={cn(buttonVariants({ variant: "outline", size: "sm" }), "ml-2")}>Resume</a>
         </div>
 
