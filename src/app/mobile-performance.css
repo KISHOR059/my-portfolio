@@ -1,0 +1,31 @@
+@media (max-width: 767px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .glass-card,
+  .visual-window,
+  [class*="backdrop-blur"] {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .glass-card {
+    background: linear-gradient(145deg, rgba(18, 23, 48, 0.96), rgba(9, 13, 31, 0.96));
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.065);
+  }
+
+  .visual-window {
+    background: #0a0f24;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .section-shell::before {
+    display: none;
+  }
+
+  .mobile-gpu-layer {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}

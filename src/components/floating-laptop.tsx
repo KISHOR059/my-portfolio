@@ -3,9 +3,12 @@
 import Image from "next/image";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import type { PointerEvent } from "react";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 export function FloatingLaptop() {
   const reducedMotion = useReducedMotion();
+  const mobile = useMediaQuery("(max-width: 767px)");
+  const calmMotion = reducedMotion || mobile;
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
   const smoothX = useSpring(pointerX, { stiffness: 90, damping: 18 });
@@ -14,7 +17,7 @@ export function FloatingLaptop() {
   const rotateX = useTransform(smoothY, [-0.5, 0.5], [4, -4]);
 
   function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
-    if (reducedMotion) return;
+    if (calmMotion) return;
     const rect = event.currentTarget.getBoundingClientRect();
     pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
     pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
@@ -25,9 +28,9 @@ export function FloatingLaptop() {
       <div className="absolute inset-[8%] rounded-full bg-violet-600/20 blur-[90px]" />
       <motion.div
         style={{ rotateX, rotateY, transformPerspective: 1000 }}
-        animate={reducedMotion ? undefined : { y: [0, -12, 0] }}
+        animate={calmMotion ? undefined : { y: [0, -12, 0] }}
         transition={{ duration: 5.4, ease: "easeInOut", repeat: Infinity }}
-        className="relative overflow-hidden rounded-[2.25rem] border border-white/10 bg-[#050816]/30 shadow-[0_40px_120px_rgba(35,20,100,.34)]"
+        className="mobile-gpu-layer relative overflow-hidden rounded-[2.25rem] border border-white/10 bg-[#050816]/30 shadow-[0_40px_120px_rgba(35,20,100,.34)]"
       >
         <Image
           src="/images/floating-workspace.png"
@@ -42,7 +45,7 @@ export function FloatingLaptop() {
       </motion.div>
       <motion.div
         className="absolute -right-3 top-[20%] hidden rounded-2xl border border-cyan-300/20 bg-[#081128]/70 px-4 py-3 shadow-[0_0_30px_rgba(34,211,238,.12)] backdrop-blur-xl sm:block"
-        animate={reducedMotion ? undefined : { y: [0, 8, 0], rotate: [2, 4, 2] }}
+        animate={calmMotion ? undefined : { y: [0, 8, 0], rotate: [2, 4, 2] }}
         transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
       >
         <p className="font-mono text-[10px] text-cyan-300">system.status</p>
