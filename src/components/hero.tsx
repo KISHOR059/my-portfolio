@@ -21,7 +21,7 @@ export function Hero() {
     <section id="home" className="relative flex min-h-screen scroll-mt-20 items-center overflow-hidden px-3 pb-16 pt-28 sm:px-4 lg:pb-8">
       <HeroAtmosphere />
       <div className="mx-auto grid w-full max-w-7xl items-center gap-16 lg:grid-cols-[1.02fr_.98fr] lg:gap-8">
-        <motion.div initial="hidden" animate="visible" transition={{ delayChildren: 0.12, staggerChildren: 0.095 }} className="relative z-10 max-w-2xl">
+        <motion.div initial="hidden" animate="visible" transition={{ delayChildren: 0.12, staggerChildren: 0.095 }} className="relative z-10 max-w-2xl text-center lg:text-left">
           <motion.div variants={item} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} className="mb-6 inline-flex items-center gap-2 overflow-hidden rounded-full border border-violet-400/20 bg-violet-500/[.08] px-3.5 py-2 text-xs font-medium text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,.06),0_0_30px_rgba(124,58,237,.1)] backdrop-blur-xl">
             <motion.span animate={reducedMotion ? undefined : { rotate: [0, 14, -10, 0], scale: [1, 1.2, 1] }} transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }}><Sparkles className="size-3.5 text-cyan-300" /></motion.span>
             Engineering Ideas Into Impact
@@ -39,13 +39,13 @@ export function Hero() {
             >Engineer</motion.span>
           </motion.h1>
 
-          <motion.div variants={item} transition={{ duration: 0.7 }} className="mt-6 flex items-center gap-3">
+          <motion.div variants={item} transition={{ duration: 0.7 }} className="mt-6 flex items-center justify-center gap-3 lg:justify-start">
             <span className="relative flex size-2.5"><motion.span className="absolute inline-flex size-full rounded-full bg-cyan-300" animate={reducedMotion ? undefined : { scale: [1, 2.1, 1], opacity: [0.8, 0, 0.8] }} transition={{ duration: 1.8, repeat: Infinity }} /><span className="relative inline-flex size-2.5 rounded-full bg-cyan-400" /></span>
             <TypingText words={portfolio.roles} />
           </motion.div>
-          <motion.p variants={item} transition={{ duration: 0.7 }} className="mt-6 max-w-xl text-pretty text-base leading-7 text-slate-400 sm:text-lg sm:leading-8">{portfolio.intro}</motion.p>
+          <motion.p variants={item} transition={{ duration: 0.7 }} className="mx-auto mt-6 max-w-xl text-pretty lg:mx-0 text-base leading-7 text-slate-400 sm:text-lg sm:leading-8">{portfolio.intro}</motion.p>
 
-          <motion.div variants={item} transition={{ duration: 0.7 }} className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <motion.div variants={item} transition={{ duration: 0.7 }} className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
             <motion.a whileHover={{ scale: 1.035, y: -2 }} whileTap={{ scale: 0.98 }} href="#projects" className={cn(buttonVariants({ variant: "glow", size: "lg" }), "group relative overflow-hidden")}>
               <motion.span className="absolute inset-y-0 w-16 -skew-x-12 bg-white/15 blur-lg" animate={reducedMotion ? undefined : { left: ["-40%", "130%"] }} transition={{ duration: 2.2, repeat: Infinity, repeatDelay: 3.2 }} />
               <span className="relative">Explore projects</span><ArrowRight className="relative size-4 transition-transform group-hover:translate-x-1" />
@@ -53,7 +53,7 @@ export function Hero() {
             <motion.a whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }} href={portfolio.resumeUrl} download className={buttonVariants({ variant: "outline", size: "lg" })}><Download className="size-4" /> Download resume</motion.a>
           </motion.div>
 
-          <motion.div variants={item} transition={{ duration: 0.7 }} className="mt-9 flex w-fit items-center gap-4 rounded-2xl border border-white/[.07] bg-white/[.025] p-2.5 pr-4 backdrop-blur-xl">
+          <motion.div variants={item} transition={{ duration: 0.7 }} className="mx-auto mt-9 flex w-fit items-center lg:mx-0 gap-4 rounded-2xl border border-white/[.07] bg-white/[.025] p-2.5 pr-4 backdrop-blur-xl">
             <div className="relative grid size-10 place-items-center rounded-xl border border-emerald-300/15 bg-emerald-400/[.06] text-emerald-300"><Radio className="size-4" /><motion.span className="absolute inset-0 rounded-xl border border-emerald-300/20" animate={reducedMotion ? undefined : { scale: [1, 1.32], opacity: [0.5, 0] }} transition={{ duration: 2, repeat: Infinity }} /></div>
             <div><strong className="block text-xs font-semibold text-slate-200">Currently building</strong><span className="text-[11px] text-slate-500">Scalable products · thoughtful interactions</span></div>
             <div className="ml-1 hidden items-end gap-0.5 sm:flex" aria-hidden="true">{[7, 13, 9, 17, 11, 15].map((height, index) => <motion.span key={index} className="w-0.5 rounded-full bg-cyan-300/60" animate={reducedMotion ? undefined : { height: [height, Math.max(5, 20 - height), height] }} transition={{ duration: 1.1 + index * 0.11, repeat: Infinity, ease: "easeInOut" }} style={{ height }} />)}</div>

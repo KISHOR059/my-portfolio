@@ -26,11 +26,11 @@ export function About() {
           </motion.div>
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <div className="mb-6 flex items-center gap-2 text-sm font-medium text-violet-300"><Sparkles className="size-4" /> A little about me</div>
+        <Reveal delay={0.1} className="text-center lg:text-left">
+          <div className="mb-6 flex items-center justify-center gap-2 lg:justify-start text-sm font-medium text-violet-300"><Sparkles className="size-4" /> A little about me</div>
           <p className="text-pretty text-xl font-medium leading-9 text-slate-200 sm:text-2xl">{portfolio.about}</p>
           <p className="mt-5 text-pretty leading-7 text-slate-400">{portfolio.aboutSecondary}</p>
-          <div className="mt-7 flex flex-wrap gap-3 text-sm text-slate-400">
+          <div className="mt-7 flex flex-wrap justify-center gap-3 lg:justify-start text-sm text-slate-400">
             <span className="chip"><MapPin className="size-3.5 text-cyan-300" /> {portfolio.location}</span>
             <span className="chip"><Braces className="size-3.5 text-violet-300" /> Clean code, useful outcomes</span>
           </div>

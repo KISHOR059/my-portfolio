@@ -12,7 +12,7 @@ export const portfolio = {
   aboutSecondary:
     "My engineering approach combines clean architecture, scalable design, and the practical use of AI to build reliable, maintainable, and future-ready applications.",
   roles: ["Software Engineer", "Full Stack Developer", "Cloud & DevOps Enthusiast"],
-  resumeUrl: "/kishor-resume.txt",
+  resumeUrl: "/resume/kishor_resume.pdf",
   social: {
     github: "https://github.com/KISHOR059",
     linkedin: "https://linkedin.com/in/kishor-m-567b95297",
