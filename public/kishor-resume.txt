@@ -1,0 +1,16 @@
+KISHOR — SOFTWARE ENGINEER
+
+Full Stack Developer specializing in Java, React, Next.js, and TypeScript.
+
+CORE SKILLS
+Frontend: React, Next.js, TypeScript, Tailwind CSS
+Backend: Java, Spring Boot, Node.js, REST APIs
+Data: PostgreSQL, MySQL, MongoDB, Redis
+Platform: AWS, Docker, GitHub Actions, Vercel
+
+PROFILE
+Software engineer focused on reliable architecture, accessible interfaces, and polished product experiences. Available for product engineering and full-stack opportunities.
+
+CONTACT
+Email: hello@kishor.dev
+Location: India — open to remote opportunities
