@@ -15,7 +15,7 @@ const item = {
 
 export function Hero() {
   return (
-    <section id="home" className="relative flex min-h-screen scroll-mt-20 items-center overflow-hidden px-5 pb-16 pt-28 sm:px-8 lg:pb-8">
+    <section id="home" className="relative flex min-h-screen scroll-mt-20 items-center overflow-hidden px-3 pb-16 pt-28 sm:px-4 lg:pb-8">
       <div className="mx-auto grid w-full max-w-7xl items-center gap-16 lg:grid-cols-[1.02fr_.98fr] lg:gap-8">
         <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.1 }} className="relative z-10 max-w-2xl">
           <motion.div variants={item} transition={{ duration: 0.55 }} className="mb-6 inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-500/[.08] px-3.5 py-2 text-xs font-medium text-violet-100 backdrop-blur-xl">

@@ -8,7 +8,7 @@ body { min-height: 100vh; margin: 0; overflow-x: hidden; background: var(--backg
 ::selection { background: rgba(124, 58, 237, .55); color: white; }
 a, button, input, textarea { -webkit-tap-highlight-color: transparent; }
 button, a { touch-action: manipulation; }
-.section-shell { position: relative; width: 100%; max-width: 80rem; margin-inline: auto; padding: 7rem 1.25rem; }
+.section-shell { position: relative; width: 100%; max-width: none; margin-inline: auto; padding: 7rem .75rem; }
 .glass-card { border: 1px solid rgba(255, 255, 255, .075); background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.018)); box-shadow: 0 22px 70px rgba(0,0,0,.23), inset 0 1px 0 rgba(255,255,255,.035); backdrop-filter: blur(18px); }
 .chip { display: inline-flex; align-items: center; gap: .5rem; border: 1px solid rgba(255,255,255,.075); border-radius: 999px; background: rgba(255,255,255,.03); padding: .55rem .85rem; }
 .visual-window { position: relative; min-height: 12rem; border: 1px solid rgba(255,255,255,.1); border-radius: 1rem; background: rgba(7,10,24,.74); padding: 1rem; box-shadow: 0 20px 60px rgba(0,0,0,.35); backdrop-filter: blur(12px); }
@@ -22,5 +22,5 @@ button, a { touch-action: manipulation; }
 .skip-link:focus { top: 1rem; }
 .cursor-glow { display: none; }
 @media (hover: hover) and (pointer: fine) { .cursor-glow { display: block; } }
-@media (min-width: 640px) { .section-shell { padding: 8rem 2rem; } }
+@media (min-width: 640px) { .section-shell { padding: 8rem 1rem; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }

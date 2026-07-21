@@ -6,8 +6,8 @@ import { portfolio } from "@/data/portfolio";
 
 export function Footer() {
   return (
-    <footer className="relative z-10 border-t border-white/[.06] px-5 py-7 sm:px-8">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left">
+    <footer className="relative z-10 border-t border-white/[.06] px-3 py-7 sm:px-4">
+      <div className="mx-auto flex max-w-none flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left">
         <div><p className="text-sm font-semibold text-white">Kishor<span className="text-cyan-300">.dev</span></p><p className="mt-1 text-xs text-slate-600">Designed &amp; engineered with intention · © {new Date().getFullYear()}</p></div>
         <div className="flex items-center gap-2">
           <a href={portfolio.social.github} target="_blank" rel="noreferrer" className="footer-icon" aria-label="GitHub"><Github className="size-4" /></a>

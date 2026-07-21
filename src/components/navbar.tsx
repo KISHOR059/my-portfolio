@@ -36,7 +36,7 @@ export function Navbar() {
         scrolled && "border-white/[.07] bg-[#050816]/75 shadow-[0_12px_40px_rgba(0,0,0,.22)] backdrop-blur-2xl",
       )}
     >
-      <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 sm:px-8" aria-label="Primary navigation">
+      <nav className="mx-auto flex h-18 max-w-none items-center justify-between px-3 sm:px-4" aria-label="Primary navigation">
         <a href="#home" className="group flex items-center gap-2.5" aria-label="Kishor — home">
           <span className="grid size-9 place-items-center rounded-xl border border-violet-400/30 bg-violet-500/10 font-mono text-sm font-bold text-white shadow-[0_0_20px_rgba(124,58,237,.2)] transition-transform group-hover:rotate-6">K</span>
           <span className="font-bold tracking-tight text-white">kishor<span className="text-cyan-300">.dev</span></span>
@@ -68,8 +68,8 @@ export function Navbar() {
 
       <AnimatePresence>
         {open && (
-          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden border-t border-white/[.07] bg-[#070a18]/95 px-5 backdrop-blur-2xl lg:hidden">
-            <div className="mx-auto flex max-w-7xl flex-col gap-1 py-4">
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden border-t border-white/[.07] bg-[#070a18]/95 px-4 backdrop-blur-2xl lg:hidden">
+            <div className="mx-auto flex max-w-none flex-col gap-1 py-4">
               {navigation.map((item) => (
                 <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setOpen(false)} className={cn("rounded-xl px-4 py-3 text-sm text-slate-300", active === item && "bg-white/[.06] text-cyan-300")}>{item}</a>
               ))}
