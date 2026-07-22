@@ -1,6 +1,7 @@
 export const portfolio = {
   name: "Kishor",
   initials: "K",
+  profileImage: "/images/kishor-profile.png",
   role: "Software Engineer",
   availability: "Available for select opportunities",
   location: "India · Open to remote",
