@@ -27,7 +27,7 @@ export function Projects() {
                 <div className="mt-5 flex flex-wrap gap-2">{project.tech.map((tech) => <span key={tech} className="rounded-full border border-white/[.07] bg-white/[.03] px-2.5 py-1 text-[10px] font-medium text-slate-300">{tech}</span>)}</div>
                 <div className="mt-6 flex items-center justify-between gap-3">
                   <span className="font-mono text-xs text-cyan-300">{project.year}</span>
-                  {project.private ? <span className="rounded-full border border-blue-300/15 bg-blue-400/[.06] px-4 py-2 text-xs font-medium text-blue-200">Professional project</span> : <a href={project.github} target="_blank" rel="noreferrer" className={cn(buttonVariants({ variant: "outline", size: "sm" }), "px-5")}><Github className="size-3.5" /> Source code</a>}
+                  {project.private ? <span className="rounded-full border border-blue-300/15 bg-blue-400/[.06] px-4 py-2 text-xs font-medium text-blue-200">Featured project</span> : <a href={project.github} target="_blank" rel="noreferrer" className={cn(buttonVariants({ variant: "outline", size: "sm" }), "px-5")}><Github className="size-3.5" /> Source code</a>}
                 </div>
               </div>
             </motion.article>

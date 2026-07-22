@@ -1,21 +1,29 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 export function Reveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const mobile = useMediaQuery("(max-width: 767px)");
+  const reducedMotion = useReducedMotion();
 
-  if (mobile) return <div className={className}>{children}</div>;
+  if (mobile || reducedMotion) return <div className={className}>{children}</div>;
 
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, y: 46, scale: 0.985, filter: "blur(10px)" }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-6% 0px -8%", amount: 0.12 }}
+      transition={{
+        duration: 0.9,
+        delay,
+        ease: [0.16, 1, 0.3, 1],
+        opacity: { duration: 0.7, delay },
+        filter: { duration: 0.75, delay },
+      }}
+      style={{ willChange: "transform, opacity, filter" }}
     >
       {children}
     </motion.div>
