@@ -4,7 +4,7 @@ export const portfolio = {
   role: "Software Engineer",
   availability: "Available for select opportunities",
   location: "India · Open to remote",
-  email: "mtkishor07gmail.com",
+  email: "mtkishor07@gmail.com",
   intro:
     "Passionate About Technology Driven by Innovation",
   about:

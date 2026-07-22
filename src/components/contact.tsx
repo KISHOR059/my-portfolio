@@ -16,21 +16,45 @@ type ContactDetail = {
   accent: string;
 };
 
+type FormStatus = "idle" | "submitting" | "success" | "error";
+
 const fieldClass = "peer mt-2 block w-full rounded-2xl border border-white/[.08] bg-[#070918]/75 px-4 py-3.5 text-sm text-white outline-none transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-slate-600 hover:border-white/[.13] focus:border-cyan-300/35 focus:bg-[#090c1d]/90 focus:shadow-[0_0_0_3px_rgba(34,211,238,.055),0_0_24px_rgba(59,130,246,.07)]";
 
 export function Contact() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [feedback, setFeedback] = useState("");
+  const [startedAt, setStartedAt] = useState(() => Date.now());
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const name = String(form.get("name"));
-    const email = String(form.get("email"));
-    const requestedSubject = String(form.get("subject"));
-    const subject = encodeURIComponent(`${requestedSubject} — from ${name}`);
-    const body = encodeURIComponent(`${String(form.get("message"))}\n\nFrom: ${name} <${email}>`);
-    setSent(true);
-    window.location.href = `mailto:${portfolio.email}?subject=${subject}&body=${body}`;
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
+    setStatus("submitting");
+    setFeedback("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.get("name"),
+          email: form.get("email"),
+          subject: form.get("subject"),
+          message: form.get("message"),
+          company: form.get("company"),
+          startedAt,
+        }),
+      });
+      const result = await response.json() as { message?: string };
+      if (!response.ok) throw new Error(result.message || "Message delivery failed.");
+      setStatus("success");
+      setFeedback("Message delivered. I’ll get back to you soon.");
+      formElement.reset();
+      setStartedAt(Date.now());
+    } catch (error) {
+      setStatus("error");
+      setFeedback(error instanceof Error ? error.message : "Message delivery failed. Please try again.");
+    }
   }
 
   const details: ContactDetail[] = [
@@ -99,6 +123,7 @@ export function Contact() {
 
             <div className="p-4 sm:p-7 lg:p-8 xl:p-10">
               <form onSubmit={handleSubmit} className="relative overflow-hidden rounded-[1.65rem] border border-white/[.08] bg-[#070918]/85 shadow-[0_24px_70px_rgba(0,0,0,.28),inset_0_1px_0_rgba(255,255,255,.04)]">
+                <input name="company" tabIndex={-1} autoComplete="off" className="absolute -left-[9999px] size-px opacity-0" aria-hidden="true" />
                 <div className="flex h-12 items-center justify-between border-b border-white/[.065] px-4 sm:px-5">
                   <div className="flex items-center gap-2">
                     <span className="flex gap-1.5" aria-hidden="true"><span className="size-2 rounded-full bg-violet-400/70" /><span className="size-2 rounded-full bg-blue-400/60" /><span className="size-2 rounded-full bg-cyan-300/70" /></span>
@@ -133,12 +158,16 @@ export function Contact() {
                     whileHover={{ y: -2, scale: 1.01 }}
                     whileTap={{ scale: .985 }}
                     type="submit"
-                    className="group relative mt-6 inline-flex h-13 w-full items-center justify-center gap-3 overflow-hidden rounded-2xl border border-violet-300/25 bg-[linear-gradient(110deg,#6d28d9,#4338ca_52%,#0891b2)] px-6 font-mono text-xs font-semibold uppercase tracking-[.08em] text-white shadow-[0_12px_36px_rgba(91,33,182,.32),0_0_26px_rgba(59,130,246,.14),inset_0_1px_0_rgba(255,255,255,.2)] transition-[border-color,box-shadow] hover:border-cyan-200/45 hover:shadow-[0_15px_42px_rgba(91,33,182,.42),0_0_32px_rgba(34,211,238,.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
+                    disabled={status === "submitting"}
+                    className="group relative mt-6 inline-flex h-13 w-full items-center justify-center gap-3 overflow-hidden rounded-2xl border border-violet-300/25 bg-[linear-gradient(110deg,#6d28d9,#4338ca_52%,#0891b2)] px-6 font-mono text-xs font-semibold uppercase tracking-[.08em] text-white shadow-[0_12px_36px_rgba(91,33,182,.32),0_0_26px_rgba(59,130,246,.14),inset_0_1px_0_rgba(255,255,255,.2)] transition-[border-color,box-shadow,opacity] hover:border-cyan-200/45 hover:shadow-[0_15px_42px_rgba(91,33,182,.42),0_0_32px_rgba(34,211,238,.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 disabled:cursor-wait disabled:opacity-65"
                   >
                     <span className="absolute inset-y-[-50%] left-[-25%] w-1/4 -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent blur-sm transition-transform duration-700 group-hover:translate-x-[520%]" />
-                    <span aria-live="polite">{sent ? "Opening your email app…" : "Transmit message"}</span>
+                    <span>{status === "submitting" ? "Transmitting…" : status === "success" ? "Message sent" : "Transmit message"}</span>
                     <span className="grid size-7 place-items-center rounded-lg border border-white/15 bg-white/10 transition-transform group-hover:translate-x-1"><Send className="size-3.5" /></span>
                   </motion.button>
+                  <p className={status === "error" ? "mt-3 min-h-5 text-center text-xs text-rose-300" : status === "success" ? "mt-3 min-h-5 text-center text-xs text-emerald-300" : "mt-3 min-h-5 text-center text-xs text-transparent"} role="status" aria-live="polite">
+                    {feedback || "Waiting"}
+                  </p>
                 </div>
               </form>
             </div>
