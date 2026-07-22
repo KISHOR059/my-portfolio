@@ -92,6 +92,23 @@ export function ReactBitsHeroBackground() {
         transition={{ duration: 38, repeat: Infinity, ease: "easeInOut" }}
       />
 
+      <motion.div
+        className="absolute left-[24%] top-[14%] z-[1] hidden size-[52vw] md:block"
+        initial={reducedMotion ? false : { opacity: 0, scale: .55 }}
+        animate={{ opacity: .88, scale: 1 }}
+        transition={{ duration: .7, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <motion.div
+          className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(76,29,149,.78)_0%,rgba(109,40,217,.42)_34%,rgba(67,56,202,.13)_58%,transparent_74%)] blur-[62px] mix-blend-screen"
+          animate={reducedMotion ? undefined : {
+            x: ["0vw", "13vw", "-12vw", "6vw", "0vw"],
+            y: ["0vh", "17vh", "-12vh", "9vh", "0vh"],
+            scale: [1, 1.1, .96, 1.07, 1],
+          }}
+          transition={{ duration: 29, delay: .55, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </motion.div>
+
       <div className="absolute inset-0 opacity-20 md:hidden [background-image:radial-gradient(circle,rgba(203,213,225,.35)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
       <div className="absolute -bottom-[42%] left-[-15%] h-[86%] w-[130%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,.2),rgba(59,130,246,.09)_38%,transparent_70%)] blur-[54px] mix-blend-screen md:hidden" />
 
