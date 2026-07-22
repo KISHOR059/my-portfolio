@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import { CloudUpload, FileCode2, FileText, Folder, MapPin, Zap } from "lucide-react";
 import { type Project } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
-function CloudStorageVisual() {
+function CloudStorageVisual({ calmMotion }: { calmMotion: boolean }) {
   const files = [
     { icon: Folder, name: "Projects", meta: "12 files", color: "text-violet-300" },
     { icon: FileCode2, name: "api-backup", meta: "2.4 MB", color: "text-cyan-300" },
@@ -20,7 +21,7 @@ function CloudStorageVisual() {
       </div>
       <div className="mt-3 grid grid-cols-[.72fr_1.28fr] gap-2">
         <div className="rounded-xl border border-dashed border-violet-300/20 bg-violet-500/[.045] p-3 text-center">
-          <motion.div animate={{ y: [0, -3, 0] }} transition={{ duration: 2.4, repeat: Infinity }} className="mx-auto grid size-8 place-items-center rounded-full bg-violet-400/10 text-violet-300"><CloudUpload className="size-4" /></motion.div>
+          <motion.div animate={calmMotion ? undefined : { y: [0, -3, 0] }} transition={{ duration: 2.4, repeat: Infinity }} className="mx-auto grid size-8 place-items-center rounded-full bg-violet-400/10 text-violet-300"><CloudUpload className="size-4" /></motion.div>
           <p className="mt-2 text-[8px] font-medium text-slate-300">Drop files</p><p className="mt-1 text-[6px] text-slate-600">or browse storage</p>
         </div>
         <div className="space-y-1.5">{files.map(({ icon: Icon, name, meta, color }) => <div key={name} className="flex items-center gap-2 rounded-lg border border-white/[.05] bg-white/[.025] px-2 py-1.5"><Icon className={cn("size-3", color)} /><span className="min-w-0 flex-1 truncate text-[7px] text-slate-300">{name}</span><span className="text-[6px] text-slate-600">{meta}</span></div>)}</div>
@@ -30,7 +31,7 @@ function CloudStorageVisual() {
   );
 }
 
-function EvChargingVisual() {
+function EvChargingVisual({ calmMotion }: { calmMotion: boolean }) {
   const pins = ["left-[19%] top-[29%]", "left-[53%] top-[18%]", "left-[72%] top-[48%]"];
 
   return (
@@ -39,7 +40,7 @@ function EvChargingVisual() {
       <div className="relative mt-3 h-28 overflow-hidden rounded-xl border border-cyan-300/10 bg-[#081225]">
         <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(24deg,transparent_46%,rgba(103,232,249,.18)_47%,rgba(103,232,249,.18)_49%,transparent_50%),linear-gradient(112deg,transparent_46%,rgba(59,130,246,.16)_47%,rgba(59,130,246,.16)_49%,transparent_50%)] [background-size:54px_42px]" />
         <svg className="absolute inset-0 size-full" viewBox="0 0 300 112" fill="none" aria-hidden="true"><path d="M-10 91C38 72 54 92 95 60C138 27 164 78 205 45C244 14 264 39 315 13" stroke="rgba(103,232,249,.52)" strokeWidth="2" strokeDasharray="5 4"/><path d="M22 8C49 37 66 43 94 60C128 81 152 89 192 116" stroke="rgba(124,58,237,.35)" strokeWidth="1.2"/></svg>
-        {pins.map((position, index) => <motion.span key={position} className={cn("absolute grid size-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-cyan-200/25 bg-[#0c1930] text-cyan-300 shadow-[0_0_16px_rgba(34,211,238,.25)]", position)} animate={{ y: [0, -3, 0] }} transition={{ duration: 2 + index * .35, repeat: Infinity }}><MapPin className="size-3" /></motion.span>)}
+        {pins.map((position, index) => <motion.span key={position} className={cn("absolute grid size-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-cyan-200/25 bg-[#0c1930] text-cyan-300 shadow-[0_0_16px_rgba(34,211,238,.25)]", position)} animate={calmMotion ? undefined : { y: [0, -3, 0] }} transition={{ duration: 2 + index * .35, repeat: Infinity }}><MapPin className="size-3" /></motion.span>)}
         <div className="absolute bottom-2 left-2 rounded-lg border border-white/[.06] bg-[#060a17]/80 px-2 py-1.5 backdrop-blur-md"><span className="block text-[6px] text-slate-500">Nearest station</span><strong className="text-[8px] text-white">0.8 km · 4 slots</strong></div>
       </div>
       <div className="mt-2 flex gap-1.5">{["10:30", "11:00", "11:30", "12:00"].map((time, index) => <span key={time} className={cn("flex-1 rounded-md border px-1 py-1.5 text-center text-[7px]", index === 1 ? "border-cyan-300/30 bg-cyan-400/10 text-cyan-200" : "border-white/[.05] bg-white/[.02] text-slate-500")}>{time}</span>)}</div>
@@ -62,7 +63,8 @@ function BharatNetVisual() {
 }
 
 export function ProjectVisual({ project }: { project: Project }) {
-  if (project.visual === "analytics") return <CloudStorageVisual />;
-  if (project.visual === "commerce") return <EvChargingVisual />;
+  const mobile = useMediaQuery("(max-width: 767px)");
+  if (project.visual === "analytics") return <CloudStorageVisual calmMotion={mobile} />;
+  if (project.visual === "commerce") return <EvChargingVisual calmMotion={mobile} />;
   return <BharatNetVisual />;
 }

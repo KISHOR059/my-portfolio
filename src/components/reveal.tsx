@@ -2,8 +2,13 @@
 
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 export function Reveal({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+  const mobile = useMediaQuery("(max-width: 767px)");
+
+  if (mobile) return <div className={className}>{children}</div>;
+
   return (
     <motion.div
       className={className}

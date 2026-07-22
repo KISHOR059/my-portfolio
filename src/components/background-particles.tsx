@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 const stars = Array.from({ length: 56 }, (_, index) => ({
@@ -15,18 +15,15 @@ export function BackgroundParticles() {
   const reducedMotion = useReducedMotion();
   const mobile = useMediaQuery("(max-width: 767px)");
   const calmMotion = reducedMotion || mobile;
-  const { scrollYProgress } = useScroll();
-  const nearStarsY = useTransform(scrollYProgress, [0, 1], [0, -180]);
-  const farStarsY = useTransform(scrollYProgress, [0, 1], [0, -70]);
 
   return (
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(76,54,180,.24),transparent_40%),radial-gradient(circle_at_85%_45%,rgba(19,88,160,.11),transparent_32%)]" />
       <motion.div className="absolute -left-40 hidden sm:block top-[22%] size-[28rem] rounded-full bg-violet-600/[.055] blur-[120px]" animate={calmMotion ? undefined : { x: [0, 180, 40, 0], y: [0, -60, 80, 0], scale: [1, 1.18, 0.9, 1] }} transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }} />
       <motion.div className="absolute -right-44 hidden sm:block top-[55%] size-[32rem] rounded-full bg-cyan-500/[.045] blur-[130px]" animate={calmMotion ? undefined : { x: [0, -160, -20, 0], y: [0, 80, -50, 0], scale: [1, 0.9, 1.2, 1] }} transition={{ duration: 29, repeat: Infinity, ease: "easeInOut" }} />
-      <motion.div className="absolute inset-0 opacity-[.035] [background-image:linear-gradient(rgba(255,255,255,.7)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.7)_1px,transparent_1px)] [background-size:80px_80px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" style={mobile ? undefined : { y: farStarsY }} />
+      <motion.div className="absolute inset-0 opacity-[.035] [background-image:linear-gradient(rgba(255,255,255,.7)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.7)_1px,transparent_1px)] [background-size:80px_80px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
 
-      <motion.div className="absolute inset-0" style={mobile ? undefined : { y: nearStarsY }}>
+      <motion.div className="absolute inset-0">
         {(mobile ? stars.slice(0, 16) : stars).map((star, index) => (
           <motion.span
             key={index}

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { GitHubLogo, LinkedInLogo } from "@/components/brand-icons";
 import { useEffect, useState } from "react";
@@ -12,11 +12,14 @@ export function Navbar() {
   const [active, setActive] = useState("Home");
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, "change", (value) => setScrolled(value > 24));
 
   useEffect(() => {
+    const handleScroll = () => setScrolled((current) => {
+      const next = window.scrollY > 24;
+      return current === next ? current : next;
+    });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     const observers = navigation.map((item) => {
       const element = document.getElementById(item.toLowerCase());
       if (!element) return null;
@@ -27,7 +30,10 @@ export function Navbar() {
       observer.observe(element);
       return observer;
     });
-    return () => observers.forEach((observer) => observer?.disconnect());
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observers.forEach((observer) => observer?.disconnect());
+    };
   }, []);
 
   return (

@@ -2,15 +2,18 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 export function TypingText({ words }: { words: readonly string[] }) {
   const reducedMotion = useReducedMotion();
+  const mobile = useMediaQuery("(max-width: 767px)");
+  const calmMotion = reducedMotion || mobile;
   const [wordIndex, setWordIndex] = useState(0);
   const [text, setText] = useState("");
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    if (reducedMotion) return;
+    if (calmMotion) return;
 
     const word = words[wordIndex];
     const completed = text === word;
@@ -27,16 +30,16 @@ export function TypingText({ words }: { words: readonly string[] }) {
     );
 
     return () => window.clearTimeout(timeout);
-  }, [deleting, reducedMotion, text, wordIndex, words]);
+  }, [calmMotion, deleting, text, wordIndex, words]);
 
   return (
     <span className="inline-flex min-h-8 items-center font-mono text-base font-medium text-cyan-300 sm:text-lg">
       <span className="text-violet-400">&lt;</span>
-      {reducedMotion ? words[0] : text}
+      {calmMotion ? words[0] : text}
       <span className="text-violet-400">/&gt;</span>
       <motion.span
         className="ml-1 h-5 w-px bg-cyan-200"
-        animate={{ opacity: [1, 0, 1] }}
+        animate={calmMotion ? undefined : { opacity: [1, 0, 1] }}
         transition={{ duration: 0.8, repeat: Infinity }}
       />
     </span>
