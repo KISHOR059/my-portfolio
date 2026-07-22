@@ -52,6 +52,16 @@ export function ReactBitsHeroBackground() {
         />
       </motion.div>
 
+      <motion.div
+        className="absolute -left-[16%] top-[-12%] hidden size-[62vw] rounded-full bg-[radial-gradient(circle,rgba(76,29,149,.58)_0%,rgba(109,40,217,.3)_34%,rgba(59,130,246,.1)_56%,transparent_72%)] blur-[72px] mix-blend-screen md:block"
+        animate={reducedMotion ? undefined : {
+          x: ["0vw", "54vw", "30vw", "7vw", "0vw"],
+          y: ["0vh", "42vh", "12vh", "54vh", "0vh"],
+          scale: [.9, 1.12, .98, 1.08, .9],
+        }}
+        transition={{ duration: 31, repeat: Infinity, ease: "easeInOut" }}
+      />
+
       <div className="absolute inset-0 opacity-20 md:hidden [background-image:radial-gradient(circle,rgba(203,213,225,.35)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
       <div className="absolute -bottom-[42%] left-[-15%] h-[86%] w-[130%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,.2),rgba(59,130,246,.09)_38%,transparent_70%)] blur-[54px] mix-blend-screen md:hidden" />
 
