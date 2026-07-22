@@ -72,6 +72,26 @@ export function ReactBitsHeroBackground() {
         transition={{ duration: 36, repeat: Infinity, ease: "easeInOut" }}
       />
 
+      <motion.div
+        className="absolute left-[32%] top-[-20%] hidden size-[38vw] rounded-full bg-[radial-gradient(circle,rgba(88,28,135,.5)_0%,rgba(126,34,206,.22)_36%,rgba(76,29,149,.08)_60%,transparent_75%)] blur-[58px] mix-blend-screen md:block"
+        animate={reducedMotion ? undefined : {
+          x: ["0vw", "30vw", "8vw", "-34vw", "0vw"],
+          y: ["0vh", "32vh", "58vh", "22vh", "0vh"],
+          scale: [.88, 1.14, 1, 1.1, .88],
+        }}
+        transition={{ duration: 40, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <motion.div
+        className="absolute right-[-18%] top-[-24%] hidden size-[50vw] rounded-full bg-[radial-gradient(circle,rgba(76,29,149,.56)_0%,rgba(91,33,182,.28)_35%,rgba(49,46,129,.09)_58%,transparent_74%)] blur-[66px] mix-blend-screen md:block"
+        animate={reducedMotion ? undefined : {
+          x: ["0vw", "-18vw", "-46vw", "-12vw", "0vw"],
+          y: ["0vh", "18vh", "52vh", "35vh", "0vh"],
+          scale: [.92, 1.1, 1.02, 1.14, .92],
+        }}
+        transition={{ duration: 38, repeat: Infinity, ease: "easeInOut" }}
+      />
+
       <div className="absolute inset-0 opacity-20 md:hidden [background-image:radial-gradient(circle,rgba(203,213,225,.35)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
       <div className="absolute -bottom-[42%] left-[-15%] h-[86%] w-[130%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,.2),rgba(59,130,246,.09)_38%,transparent_70%)] blur-[54px] mix-blend-screen md:hidden" />
 
