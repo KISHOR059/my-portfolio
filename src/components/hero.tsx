@@ -4,10 +4,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Download, Radio, Sparkles } from "lucide-react";
 import { InteractiveDeveloperPanel } from "@/components/interactive-developer-panel";
 import { ReactBitsHeroBackground } from "@/components/react-bits-hero-background";
-import { buttonVariants } from "@/components/ui/button";
 import { portfolio } from "@/data/portfolio";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { cn } from "@/lib/utils";
 
 const item = {
   hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
@@ -43,11 +41,38 @@ export function Hero() {
             {portfolio.roles.map((role) => <span key={role} className="rounded-lg border border-white/[.07] bg-white/[.025] px-2.5 py-1.5">{role}</span>)}
           </motion.div>
 
-          <motion.div variants={item} transition={{ duration: .76 }} className="flex flex-col items-center gap-3 sm:flex-row lg:items-start">
-            <motion.a whileHover={{ y: -2, scale: 1.025 }} whileTap={{ scale: .98 }} href="#projects" className={cn(buttonVariants({ variant: "glow", size: "lg" }), "group rounded-xl px-6")}>
-              Explore projects <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          <motion.div variants={item} transition={{ duration: .76 }} className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row lg:justify-start">
+            <motion.a
+              whileHover={calmMotion ? undefined : { y: -3, scale: 1.02 }}
+              whileTap={{ scale: .98 }}
+              href="#projects"
+              className="group relative isolate inline-flex h-14 min-w-[196px] items-center justify-center gap-3 overflow-hidden rounded-2xl border border-violet-300/35 bg-[linear-gradient(115deg,rgba(109,40,217,.95),rgba(67,56,202,.92)_52%,rgba(8,145,178,.88))] px-5 font-mono text-xs font-semibold uppercase tracking-[.06em] text-white shadow-[0_12px_38px_rgba(91,33,182,.38),0_0_26px_rgba(59,130,246,.2),inset_0_1px_0_rgba(255,255,255,.24)] transition-[border-color,box-shadow] duration-300 hover:border-cyan-200/55 hover:shadow-[0_16px_46px_rgba(91,33,182,.48),0_0_34px_rgba(34,211,238,.28),inset_0_1px_0_rgba(255,255,255,.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
+            >
+              <span className="absolute inset-[1px] -z-10 rounded-[15px] bg-[linear-gradient(120deg,rgba(255,255,255,.08),transparent_38%,rgba(34,211,238,.09))]" />
+              <motion.span
+                className="absolute inset-y-[-40%] left-[-35%] w-[28%] skew-x-[-18deg] bg-gradient-to-r from-transparent via-white/35 to-transparent blur-sm"
+                animate={calmMotion ? undefined : { x: ["0%", "520%"] }}
+                transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 1.2, ease: "easeInOut" }}
+              />
+              <span className="relative">Explore projects</span>
+              <span className="relative grid size-8 place-items-center rounded-xl border border-white/20 bg-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,.15)] transition-transform duration-300 group-hover:translate-x-1 group-hover:bg-white/15">
+                <ArrowRight className="size-4" />
+              </span>
             </motion.a>
-            <motion.a whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: .98 }} href={portfolio.resumeUrl} download className={cn(buttonVariants({ variant: "outline", size: "lg" }), "rounded-xl px-6")}><Download className="size-4" /> Download resume</motion.a>
+
+            <motion.a
+              whileHover={calmMotion ? undefined : { y: -3, scale: 1.015 }}
+              whileTap={{ scale: .98 }}
+              href={portfolio.resumeUrl}
+              download
+              className="group relative inline-flex h-14 min-w-[196px] items-center justify-center gap-3 overflow-hidden rounded-2xl border border-white/[.13] bg-[linear-gradient(145deg,rgba(19,22,43,.94),rgba(10,12,27,.88))] px-5 font-mono text-xs font-semibold uppercase tracking-[.06em] text-slate-100 shadow-[0_12px_34px_rgba(0,0,0,.3),inset_0_1px_0_rgba(255,255,255,.08)] backdrop-blur-2xl transition-[border-color,box-shadow,color] duration-300 hover:border-cyan-300/35 hover:text-white hover:shadow-[0_14px_38px_rgba(0,0,0,.34),0_0_28px_rgba(34,211,238,.12),inset_0_1px_0_rgba(255,255,255,.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80"
+            >
+              <span className="absolute inset-x-[18%] top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/55 to-transparent opacity-60 transition-opacity group-hover:opacity-100" />
+              <span className="relative grid size-8 place-items-center rounded-xl border border-cyan-300/15 bg-cyan-300/[.06] text-cyan-200 transition-[border-color,background-color,transform] duration-300 group-hover:-translate-y-0.5 group-hover:border-cyan-300/30 group-hover:bg-cyan-300/[.1]">
+                <Download className="size-4" />
+              </span>
+              <span className="relative">Download resume</span>
+            </motion.a>
           </motion.div>
 
           <motion.div variants={item} transition={{ duration: .76 }} className="mt-1 flex items-center gap-2.5 font-mono text-[10px] text-slate-500">
