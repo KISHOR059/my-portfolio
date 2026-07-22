@@ -1,4 +1,11 @@
 @media (max-width: 767px) {
+  html,
+  body {
+    overscroll-behavior-y: none;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+
   body {
     background-attachment: scroll;
   }
