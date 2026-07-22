@@ -1,9 +1,12 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
 import { HeroColorBand } from "@/components/ui/hero-color-band";
 import { HeroDotField } from "@/components/ui/hero-dot-field";
 
 export function ReactBitsHeroBackground() {
+  const reducedMotion = useReducedMotion();
+
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-15%,rgba(124,58,237,.16),transparent_40%),linear-gradient(to_bottom,#050816_0%,#070817_58%,#050816_100%)]" />
@@ -21,22 +24,33 @@ export function ReactBitsHeroBackground() {
         gradientTo="rgba(103, 232, 249, 0.46)"
       />
 
-      <HeroColorBand
-        className="absolute -bottom-[34%] left-0 right-0 hidden h-[150%] opacity-100 mix-blend-screen md:block"
-        color="#a855f7"
-        rotation={90}
-        speed={.2}
-        scale={1}
-        frequency={1}
-        warpStrength={1}
-        noise={.15}
-        bandWidth={.14}
-        yOffset={.3}
-        fadeTop={.75}
-        mouseInfluence={.3}
-        iterations={1}
-        intensity={1.9}
-      />
+      <motion.div
+        className="absolute -bottom-[42%] left-[-22%] hidden h-[205%] w-[144%] md:block"
+        animate={reducedMotion ? undefined : {
+          x: ["-14%", "9%", "15%", "-7%", "-14%"],
+          y: ["14%", "-13%", "-4%", "11%", "14%"],
+          rotate: [-3, 3, -2, 4, -3],
+          scale: [1.02, 1.1, 1.04, 1.08, 1.02],
+        }}
+        transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <HeroColorBand
+          className="absolute inset-0 opacity-100 mix-blend-screen"
+          color="#6d28d9"
+          rotation={90}
+          speed={.24}
+          scale={1.24}
+          frequency={1}
+          warpStrength={1}
+          noise={.055}
+          bandWidth={.14}
+          yOffset={.08}
+          fadeTop={1.05}
+          mouseInfluence={.36}
+          iterations={1}
+          intensity={1.38}
+        />
+      </motion.div>
 
       <div className="absolute inset-0 opacity-20 md:hidden [background-image:radial-gradient(circle,rgba(203,213,225,.35)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
       <div className="absolute -bottom-[42%] left-[-15%] h-[86%] w-[130%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,.2),rgba(59,130,246,.09)_38%,transparent_70%)] blur-[54px] mix-blend-screen md:hidden" />
