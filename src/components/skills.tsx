@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { CloudCog, Container, Database, PanelsTopLeft, ServerCog, Wrench } from "lucide-react";
 import { Reveal } from "@/components/reveal";
+import { TechnologyLogoLoop } from "@/components/technology-logo-loop";
 import { BorderGlow } from "@/components/ui/border-glow";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { portfolio } from "@/data/portfolio";
@@ -51,6 +52,9 @@ export function Skills() {
           );
         })}
       </div>
+      <Reveal delay={.12}>
+        <TechnologyLogoLoop />
+      </Reveal>
     </section>
   );
 }

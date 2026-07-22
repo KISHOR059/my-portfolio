@@ -2,6 +2,7 @@
 
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { useEffect } from "react";
+import { LightRays } from "@/components/ui/light-rays";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 export function ReactBitsHeroBackground() {
@@ -26,19 +27,31 @@ export function ReactBitsHeroBackground() {
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-15%,rgba(124,58,237,.18),transparent_38%),linear-gradient(to_bottom,#050816_0%,#070817_58%,#050816_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-15%,rgba(124,58,237,.2),transparent_40%),linear-gradient(to_bottom,#050816_0%,#070817_58%,#050816_100%)]" />
+
+      <LightRays
+        className="hidden opacity-95 mix-blend-screen md:block"
+        raysOrigin="top-center"
+        raysColor="#b59cff"
+        raysSpeed={0.42}
+        lightSpread={0.9}
+        rayLength={1.65}
+        pulsating
+        fadeDistance={1.12}
+        saturation={1.2}
+        followMouse
+        mouseInfluence={0.075}
+        noiseAmount={0.035}
+        distortion={0.025}
+      />
 
       <motion.div
-        className="absolute inset-0 hidden opacity-55 md:block [background-image:radial-gradient(circle,rgba(203,213,225,.38)_1px,transparent_1.25px)] [background-size:17px_17px]"
+        className="absolute inset-0 hidden opacity-45 md:block [background-image:radial-gradient(circle,rgba(203,213,225,.38)_1px,transparent_1.25px)] [background-size:17px_17px]"
         style={{ maskImage: mask, WebkitMaskImage: mask }}
       />
       <div className="absolute inset-0 opacity-20 md:hidden [background-image:radial-gradient(circle,rgba(203,213,225,.35)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
 
-      <motion.div
-        className="absolute -bottom-[52%] left-[-12%] h-[112%] w-[124%] rounded-[50%] bg-[conic-gradient(from_215deg_at_50%_50%,transparent_0deg,rgba(124,58,237,.55)_55deg,rgba(59,130,246,.42)_102deg,rgba(34,211,238,.23)_132deg,transparent_185deg)] blur-[54px] mix-blend-screen md:blur-[72px]"
-        animate={calmMotion ? undefined : { rotate: [-4, 3, -4], scaleX: [1, 1.08, 1], y: [0, -22, 0] }}
-        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-      />
+      <div className="absolute -bottom-[48%] left-[-12%] h-[100%] w-[124%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,.22),rgba(59,130,246,.1)_38%,transparent_70%)] blur-[48px] mix-blend-screen md:blur-[68px]" />
       <motion.div
         className="absolute -bottom-[46%] left-[8%] h-[96%] w-[100%] rounded-[48%] border-[2px] border-violet-300/20 bg-violet-500/[.08] blur-[22px] mix-blend-screen"
         animate={calmMotion ? undefined : { rotate: [2, -3, 2], scaleY: [1, 1.1, 1], x: [0, 32, 0] }}
@@ -50,8 +63,8 @@ export function ReactBitsHeroBackground() {
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="absolute inset-x-0 bottom-0 h-[56%] bg-gradient-to-b from-transparent via-[#050816]/55 to-[#050816]" />
-      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#050816] via-[#050816]/60 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-[56%] bg-gradient-to-b from-transparent via-[#050816]/35 to-[#050816]" />
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#050816]/80 via-[#050816]/25 to-transparent" />
     </div>
   );
 }
