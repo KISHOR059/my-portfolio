@@ -23,7 +23,7 @@ export function ReactBitsHeroBackground() {
 
       <HeroColorBand
         className="absolute -bottom-[34%] left-0 right-0 hidden h-[150%] opacity-100 mix-blend-screen md:block"
-        color="#8b5cf6"
+        color="#a855f7"
         rotation={90}
         speed={.2}
         scale={1}
@@ -35,7 +35,7 @@ export function ReactBitsHeroBackground() {
         fadeTop={.75}
         mouseInfluence={.3}
         iterations={1}
-        intensity={1.55}
+        intensity={1.9}
       />
 
       <div className="absolute inset-0 opacity-20 md:hidden [background-image:radial-gradient(circle,rgba(203,213,225,.35)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
