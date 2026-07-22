@@ -25,7 +25,7 @@ export function ReactBitsHeroBackground() {
       />
 
       <motion.div
-        className="absolute -bottom-[42%] left-[-22%] hidden h-[205%] w-[144%] md:block"
+        className="absolute -bottom-[30%] left-[-45%] h-[170%] w-[190%] md:-bottom-[42%] md:left-[-22%] md:h-[205%] md:w-[144%]"
         initial={reducedMotion ? false : { opacity: 0 }}
         animate={reducedMotion ? undefined : {
           opacity: 1,
@@ -120,7 +120,7 @@ export function ReactBitsHeroBackground() {
       </motion.div>
 
       <div className="absolute inset-0 opacity-20 md:hidden [background-image:radial-gradient(circle,rgba(203,213,225,.35)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
-      <div className="absolute -bottom-[42%] left-[-15%] h-[86%] w-[130%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,.2),rgba(59,130,246,.09)_38%,transparent_70%)] blur-[54px] mix-blend-screen md:hidden" />
+      <div className="absolute left-[-28%] top-[4%] h-[62%] w-[156%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,.26),rgba(59,130,246,.1)_38%,transparent_70%)] blur-[48px] mix-blend-screen md:hidden" />
 
       <div className="absolute inset-0 z-[2] bg-[linear-gradient(to_bottom,transparent_0%,transparent_48%,rgba(5,8,22,.03)_58%,rgba(5,8,22,.12)_68%,rgba(5,8,22,.32)_78%,rgba(5,8,22,.68)_88%,#050816_100%)]" />
       <div className="absolute inset-x-0 top-0 z-[2] h-28 bg-gradient-to-b from-[#050816]/75 via-[#050816]/20 to-transparent" />

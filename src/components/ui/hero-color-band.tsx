@@ -113,9 +113,10 @@ export function HeroColorBand({
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container || window.matchMedia("(max-width: 767px)").matches) return;
+    if (!container) return;
+    const mobile = window.matchMedia("(max-width: 767px)").matches;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const renderer = new Renderer({ alpha: true, antialias: false, dpr: Math.min(window.devicePixelRatio || 1, 1.35) });
+    const renderer = new Renderer({ alpha: true, antialias: false, dpr: Math.min(window.devicePixelRatio || 1, mobile ? .72 : 1.35) });
     const gl = renderer.gl;
     gl.canvas.style.width = "100%";
     gl.canvas.style.height = "100%";
