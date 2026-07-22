@@ -1,0 +1,9 @@
+.code-muted { color: rgba(148, 163, 184, 0.32); }
+.code-pink { color: #f472b6; }
+.code-cyan { color: #78d1e1; }
+.code-lilac { color: #dad1f6; }
+.code-violet { color: #a78bfa; }
+
+@media (max-width: 767px) {
+  .code-muted { color: rgba(148, 163, 184, 0.44); }
+}

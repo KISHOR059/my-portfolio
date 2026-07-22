@@ -1,5 +1,4 @@
 import { About } from "@/components/about";
-import { BackgroundParticles } from "@/components/background-particles";
 import { Contact } from "@/components/contact";
 import { DesktopScrollEffects } from "@/components/desktop-scroll-effects";
 import { CursorGlow } from "@/components/cursor-glow";
@@ -17,7 +16,6 @@ export default function Home() {
       <a href="#main-content" className="skip-link">Skip to content</a>
       <SmoothScroll />
       <DesktopScrollEffects />
-      <BackgroundParticles />
       <CursorGlow />
       <Navbar />
       <main id="main-content" className="relative z-10 overflow-hidden">
