@@ -42,7 +42,7 @@ export function InteractiveDeveloperPanel() {
       initial={{ opacity: 0, y: 24, scale: .97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: .9, delay: .28, ease: [0.16, 1, 0.3, 1] }}
-      className={cn("relative w-full overflow-visible rounded-2xl border bg-[#120f17]/70 backdrop-blur-2xl", theme.border, theme.glow)}
+      className={cn("relative flex w-full flex-col overflow-visible rounded-2xl border bg-[#120f17]/70 backdrop-blur-2xl lg:min-h-[540px]", theme.border, theme.glow)}
     >
       <div className="flex min-h-12 items-center justify-between gap-3 border-b border-white/[.07] px-3 sm:px-4">
         <div className="flex items-center gap-2.5"><span className="flex gap-1.5" aria-hidden="true"><span className="size-2.5 rounded-full bg-white/15" /><span className="size-2.5 rounded-full bg-white/10" /><span className={cn("size-2.5 rounded-full shadow-[0_0_10px_currentColor]", theme.dot)} /></span><span className="hidden font-mono text-[10px] text-slate-500 sm:inline">developer.config</span></div>
@@ -59,7 +59,7 @@ export function InteractiveDeveloperPanel() {
         {tabs.map((tab) => <button key={tab} onClick={() => setActive(tab)} className={cn("relative rounded-t-lg px-2.5 py-2 font-mono text-[9px] text-slate-600 transition-colors sm:px-3 sm:text-[10px]", active === tab && "bg-white/[.035] text-slate-200")}>{tab}{active === tab && <motion.span layoutId="code-tab" className={cn("absolute inset-x-2 bottom-0 h-px", theme.dot)} />}</button>)}
       </div>
 
-      <div className="min-h-[250px] overflow-hidden px-4 py-5 font-mono text-[11px] leading-7 sm:min-h-[285px] sm:px-6 sm:py-6 sm:text-[13px]">
+      <div className="min-h-[250px] flex-1 overflow-hidden px-4 py-5 font-mono text-[11px] leading-7 sm:min-h-[285px] sm:px-6 sm:py-6 sm:text-[13px] lg:min-h-[390px]">
         <AnimatePresence mode="wait" initial={false}>
           <motion.pre key={active} initial={calmMotion ? false : { opacity: 0, y: 8, filter: "blur(4px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={calmMotion ? undefined : { opacity: 0, y: -6 }} transition={{ duration: .25 }} className="m-0 overflow-x-auto whitespace-pre text-slate-300">
             {active === "profile.ts" ? <ProfileCode /> : active === "skills.json" ? <SkillsCode /> : <BuildingCode />}
