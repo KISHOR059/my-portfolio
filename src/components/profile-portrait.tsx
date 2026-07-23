@@ -25,7 +25,6 @@ export function ProfilePortrait({ className, preload = false }: { className?: st
             className="object-cover object-center"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050816]/75 via-transparent to-violet-950/10" />
-          <div className="pointer-events-none absolute inset-0 opacity-15 [background-image:linear-gradient(rgba(255,255,255,.14)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:32px_32px] [mask-image:linear-gradient(to_bottom,transparent,black)]" />
           <span className="pointer-events-none absolute left-4 top-4 size-8 border-l border-t border-violet-200/60" />
           <span className="pointer-events-none absolute bottom-4 right-4 size-8 border-b border-r border-cyan-200/60" />
           <Code2 className="absolute right-4 top-4 size-11 rounded-xl border border-cyan-300/20 bg-[#071022]/75 p-2.5 text-cyan-300 shadow-[0_0_24px_rgba(34,211,238,.2)] backdrop-blur-xl" />
