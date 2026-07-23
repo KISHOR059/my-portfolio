@@ -65,6 +65,7 @@ export const LogoLoop = memo(function LogoLoop({
   const offsetRef = useRef(0);
   const velocityRef = useRef(0);
   const visibleRef = useRef(true);
+  const resumeRef = useRef<(() => void) | null>(null);
   const [sequenceWidth, setSequenceWidth] = useState(0);
   const [copyCount, setCopyCount] = useState(MIN_COPIES);
   const [hovered, setHovered] = useState(false);
@@ -96,8 +97,8 @@ export const LogoLoop = memo(function LogoLoop({
 
     const animate = (timestamp: number) => {
       if (!visibleRef.current || document.hidden) {
-        lastTimeRef.current = timestamp;
-        frameRef.current = requestAnimationFrame(animate);
+        lastTimeRef.current = null;
+        frameRef.current = null;
         return;
       }
       if (lastTimeRef.current === null) lastTimeRef.current = timestamp;
@@ -111,11 +112,17 @@ export const LogoLoop = memo(function LogoLoop({
       frameRef.current = requestAnimationFrame(animate);
     };
 
-    frameRef.current = requestAnimationFrame(animate);
+    const start = () => {
+      if (frameRef.current !== null || !visibleRef.current || document.hidden) return;
+      frameRef.current = requestAnimationFrame(animate);
+    };
+    resumeRef.current = start;
+    start();
     return () => {
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
       frameRef.current = null;
       lastTimeRef.current = null;
+      resumeRef.current = null;
     };
   }, [effectiveHoverSpeed, hovered, sequenceWidth, targetVelocity]);
 
@@ -124,9 +131,22 @@ export const LogoLoop = memo(function LogoLoop({
     if (!container) return;
     const observer = new IntersectionObserver(([entry]) => {
       visibleRef.current = entry.isIntersecting;
+      if (entry.isIntersecting) resumeRef.current?.();
+      else if (frameRef.current !== null) {
+        cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+        lastTimeRef.current = null;
+      }
     }, { threshold: 0.01 });
+    const onVisibilityChange = () => {
+      if (!document.hidden && visibleRef.current) resumeRef.current?.();
+    };
     observer.observe(container);
-    return () => observer.disconnect();
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
   }, []);
 
   const renderLogo = useCallback((item: LogoItem, key: Key) => {

@@ -22,7 +22,7 @@ export function CursorGlow() {
   return (
     <motion.div
       aria-hidden="true"
-      className="cursor-glow pointer-events-none fixed left-0 top-0 z-30 size-[360px] rounded-full bg-cyan-400/[.035] blur-3xl"
+      className="cursor-glow pointer-events-none fixed left-0 top-0 z-30 size-[320px] rounded-full bg-[radial-gradient(circle,rgba(34,211,238,.065)_0%,rgba(34,211,238,.025)_38%,transparent_72%)]"
       style={{ x: smoothX, y: smoothY }}
     />
   );

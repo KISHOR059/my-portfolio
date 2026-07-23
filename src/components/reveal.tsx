@@ -13,17 +13,15 @@ export function Reveal({ children, className, delay = 0 }: { children: ReactNode
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 46, scale: 0.985, filter: "blur(10px)" }}
-      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: 30, scale: 0.99 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-6% 0px -8%", amount: 0.12 }}
       transition={{
-        duration: 0.9,
+        duration: 0.72,
         delay,
         ease: [0.16, 1, 0.3, 1],
-        opacity: { duration: 0.7, delay },
-        filter: { duration: 0.75, delay },
+        opacity: { duration: 0.58, delay },
       }}
-      style={{ willChange: "transform, opacity, filter" }}
     >
       {children}
     </motion.div>

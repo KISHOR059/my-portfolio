@@ -61,7 +61,7 @@ export function InteractiveDeveloperPanel() {
 
       <div className="min-h-[250px] flex-1 overflow-hidden px-4 py-5 font-mono text-[11px] leading-7 sm:min-h-[285px] sm:px-6 sm:py-6 sm:text-[13px] lg:min-h-[390px]">
         <AnimatePresence mode="wait" initial={false}>
-          <motion.pre key={active} initial={calmMotion ? false : { opacity: 0, y: 8, filter: "blur(4px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={calmMotion ? undefined : { opacity: 0, y: -6 }} transition={{ duration: .25 }} className="m-0 overflow-x-auto whitespace-pre text-slate-300">
+          <motion.pre key={active} initial={calmMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={calmMotion ? undefined : { opacity: 0, y: -6 }} transition={{ duration: .22 }} className="m-0 overflow-x-auto whitespace-pre text-slate-300">
             {active === "profile.ts" ? <ProfileCode /> : active === "skills.json" ? <SkillsCode /> : <BuildingCode />}
           </motion.pre>
         </AnimatePresence>

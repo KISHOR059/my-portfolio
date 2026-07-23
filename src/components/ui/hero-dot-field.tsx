@@ -46,7 +46,10 @@ export const HeroDotField = memo(function HeroDotField({
     const context = canvas.getContext("2d", { alpha: true });
     if (!context) return;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.35);
+    const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8;
+    const lowPower = (navigator.hardwareConcurrency ?? 8) <= 4 || deviceMemory <= 4;
+    const frameInterval = 1000 / (lowPower ? 45 : 60);
+    const dpr = Math.min(window.devicePixelRatio || 1, lowPower ? 1 : 1.2);
     const dots: Dot[] = [];
     const mouse = { x: -9999, y: -9999, previousX: -9999, previousY: -9999, speed: 0 };
     const size = { width: 0, height: 0 };
@@ -56,6 +59,8 @@ export const HeroDotField = memo(function HeroDotField({
     let glowOpacity = 0;
     let visible = true;
     let lastTime = performance.now();
+    let lastRenderedAt = 0;
+    let fillStyle: CanvasGradient | string = gradientFrom;
 
     const buildDots = () => {
       dots.length = 0;
@@ -82,14 +87,29 @@ export const HeroDotField = memo(function HeroDotField({
       canvas.style.height = `${rect.height}px`;
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       buildDots();
+      const gradient = context.createLinearGradient(0, 0, size.width, size.height);
+      gradient.addColorStop(0, gradientFrom);
+      gradient.addColorStop(1, gradientTo);
+      fillStyle = gradient;
     };
     const onPointerMove = (event: PointerEvent) => {
       const rect = parent.getBoundingClientRect();
       mouse.x = event.clientX - rect.left;
       mouse.y = event.clientY - rect.top;
+      if (mouse.previousX < -9000) {
+        mouse.previousX = mouse.x;
+        mouse.previousY = mouse.y;
+      }
+      if (frame === 0 && visible && !document.hidden) start();
     };
     const draw = (now: number) => {
+      frame = 0;
       if (!visible || document.hidden) return;
+      if (!reducedMotion && now - lastRenderedAt < frameInterval) {
+        frame = requestAnimationFrame(draw);
+        return;
+      }
+      lastRenderedAt = now;
       const delta = Math.min(2.5, Math.max(0.5, (now - lastTime) / (1000 / 60)));
       lastTime = now;
       frameCount += 1;
@@ -113,10 +133,7 @@ export const HeroDotField = memo(function HeroDotField({
       }
 
       context.clearRect(0, 0, size.width, size.height);
-      const gradient = context.createLinearGradient(0, 0, size.width, size.height);
-      gradient.addColorStop(0, gradientFrom);
-      gradient.addColorStop(1, gradientTo);
-      context.fillStyle = gradient;
+      context.fillStyle = fillStyle;
       context.beginPath();
       const cursorRadiusSquared = cursorRadius * cursorRadius;
       const radius = dotRadius / 2;
@@ -167,7 +184,8 @@ export const HeroDotField = memo(function HeroDotField({
         context.arc(drawX, drawY, renderRadius, 0, TWO_PI);
       }
       context.fill();
-      if (!reducedMotion) frame = requestAnimationFrame(draw);
+      const unsettled = sparkle || waveAmplitude > 0 || mouse.speed > 0.001 || engagement > 0.001 || dots.some((dot) => Math.abs(dot.sx - dot.ax) > 0.05 || Math.abs(dot.sy - dot.ay) > 0.05);
+      if (!reducedMotion && unsettled) frame = requestAnimationFrame(draw);
     };
     const start = () => {
       cancelAnimationFrame(frame);

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { useCallback, useMemo, useRef, useState, type CSSProperties, type PointerEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent, type ReactNode } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 
@@ -51,6 +51,7 @@ export function BorderGlow({
   const [hovered, setHovered] = useState(false);
   const [angle, setAngle] = useState(45);
   const [edgeProximity, setEdgeProximity] = useState(0);
+  const pointerFrame = useRef(0);
   const mobile = useMediaQuery("(max-width: 767px)");
   const reducedMotion = useReducedMotion();
 
@@ -60,22 +61,29 @@ export function BorderGlow({
   }, [colors]);
 
   const handlePointerMove = useCallback((event: PointerEvent<HTMLDivElement>) => {
-    if (mobile || reducedMotion) return;
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    const cx = rect.width / 2;
-    const cy = rect.height / 2;
-    const dx = x - cx;
-    const dy = y - cy;
-    const kx = dx === 0 ? Infinity : cx / Math.abs(dx);
-    const ky = dy === 0 ? Infinity : cy / Math.abs(dy);
-    setEdgeProximity(Math.min(Math.max(1 / Math.min(kx, ky), 0), 1));
-    const degrees = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
-    setAngle(degrees < 0 ? degrees + 360 : degrees);
+    if (mobile || reducedMotion || pointerFrame.current) return;
+    const clientX = event.clientX;
+    const clientY = event.clientY;
+    pointerFrame.current = requestAnimationFrame(() => {
+      pointerFrame.current = 0;
+      const card = cardRef.current;
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const dx = x - cx;
+      const dy = y - cy;
+      const kx = dx === 0 ? Infinity : cx / Math.abs(dx);
+      const ky = dy === 0 ? Infinity : cy / Math.abs(dy);
+      setEdgeProximity(Math.min(Math.max(1 / Math.min(kx, ky), 0), 1));
+      const degrees = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+      setAngle(degrees < 0 ? degrees + 360 : degrees);
+    });
   }, [mobile, reducedMotion]);
+
+  useEffect(() => () => cancelAnimationFrame(pointerFrame.current), []);
 
   const colorSensitivity = edgeSensitivity + 20;
   const borderOpacity = hovered && !mobile ? Math.max(0, (edgeProximity * 100 - colorSensitivity) / (100 - colorSensitivity)) : mobile ? .2 : 0;
@@ -88,7 +96,7 @@ export function BorderGlow({
       ref={cardRef}
       onPointerMove={handlePointerMove}
       onPointerEnter={() => setHovered(true)}
-      onPointerLeave={() => { setHovered(false); setEdgeProximity(0); }}
+      onPointerLeave={() => { cancelAnimationFrame(pointerFrame.current); pointerFrame.current = 0; setHovered(false); setEdgeProximity(0); }}
       className={cn("relative isolate grid border border-white/10", className)}
       style={{ background: backgroundColor, borderRadius, transform: "translate3d(0,0,0.01px)" }}
     >

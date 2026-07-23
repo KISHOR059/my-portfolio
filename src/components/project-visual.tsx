@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 import { CloudUpload, FileCode2, FileText, Folder, MapPin, Zap } from "lucide-react";
 import { type Project } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
@@ -65,8 +66,12 @@ function BharatNetVisual({ calmMotion }: { calmMotion: boolean }) {
 export function ProjectVisual({ project }: { project: Project }) {
   const mobile = useMediaQuery("(max-width: 767px)");
   const reducedMotion = useReducedMotion();
-  const calmMotion = mobile || Boolean(reducedMotion);
-  if (project.visual === "analytics") return <CloudStorageVisual calmMotion={calmMotion} />;
-  if (project.visual === "commerce") return <EvChargingVisual calmMotion={calmMotion} />;
-  return <BharatNetVisual calmMotion={calmMotion} />;
+  const visualRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(visualRef, { margin: "100px 0px" });
+  const calmMotion = mobile || Boolean(reducedMotion) || !inView;
+  return (
+    <div ref={visualRef}>
+      {project.visual === "analytics" ? <CloudStorageVisual calmMotion={calmMotion} /> : project.visual === "commerce" ? <EvChargingVisual calmMotion={calmMotion} /> : <BharatNetVisual calmMotion={calmMotion} />}
+    </div>
+  );
 }

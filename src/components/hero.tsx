@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 import { ArrowRight, Download, Radio, Sparkles } from "lucide-react";
 import { ProfilePortrait } from "@/components/profile-portrait";
 import { ReactBitsHeroBackground } from "@/components/react-bits-hero-background";
@@ -8,17 +9,19 @@ import { portfolio } from "@/data/portfolio";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 const item = {
-  hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0 },
 };
 
 export function Hero() {
   const mobile = useMediaQuery("(max-width: 767px)");
   const reducedMotion = useReducedMotion();
-  const calmMotion = mobile || reducedMotion;
+  const heroRef = useRef<HTMLElement>(null);
+  const heroInView = useInView(heroRef, { margin: "120px 0px" });
+  const calmMotion = mobile || reducedMotion || !heroInView;
 
   return (
-    <section id="home" className="relative flex min-h-screen scroll-mt-20 items-center overflow-hidden px-4 pb-18 pt-28 sm:px-6 lg:pt-32">
+    <section ref={heroRef} id="home" className="relative flex min-h-screen scroll-mt-20 items-center overflow-hidden px-4 pb-18 pt-28 sm:px-6 lg:pt-32">
       <ReactBitsHeroBackground />
       <div className="relative z-10 mx-auto grid w-full max-w-[82.75rem] items-start gap-12 lg:grid-cols-2 lg:gap-5 xl:gap-8">
         <motion.div initial="hidden" animate="visible" transition={{ delayChildren: .08, staggerChildren: .1 }} className="flex max-w-2xl flex-col items-center gap-5 text-center lg:items-start lg:pt-5 lg:text-left">

@@ -116,7 +116,12 @@ export function HeroColorBand({
     if (!container) return;
     const mobile = window.matchMedia("(max-width: 767px)").matches;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const renderer = new Renderer({ alpha: true, antialias: false, dpr: Math.min(window.devicePixelRatio || 1, mobile ? .72 : 1.35) });
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const deviceMemory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8;
+    const lowPower = (navigator.hardwareConcurrency ?? 8) <= 4 || deviceMemory <= 4;
+    const frameInterval = 1000 / (mobile || lowPower ? 30 : 60);
+    const maxRenderSize = mobile ? 800 : lowPower ? 1200 : 1600;
+    const renderer = new Renderer({ alpha: true, antialias: false, dpr: 1 });
     const gl = renderer.gl;
     gl.canvas.style.width = "100%";
     gl.canvas.style.height = "100%";
@@ -149,13 +154,19 @@ export function HeroColorBand({
     let frame = 0;
     let visible = true;
     let lastTime = performance.now();
+    let lastRenderedAt = 0;
     const startedAt = lastTime;
 
     const resize = () => {
       const width = container.clientWidth || 1;
       const height = container.clientHeight || 1;
-      renderer.setSize(width, height);
-      uniforms.uCanvas.value = [width, height];
+      const renderScale = Math.min(1, maxRenderSize / Math.max(width, height));
+      const renderWidth = Math.max(1, Math.round(width * renderScale));
+      const renderHeight = Math.max(1, Math.round(height * renderScale));
+      renderer.setSize(renderWidth, renderHeight);
+      gl.canvas.style.width = "100%";
+      gl.canvas.style.height = "100%";
+      uniforms.uCanvas.value = [renderWidth, renderHeight];
     };
     const onPointerMove = (event: PointerEvent) => {
       const rect = container.getBoundingClientRect();
@@ -164,6 +175,11 @@ export function HeroColorBand({
     };
     const render = (now: number) => {
       if (!visible || document.hidden) return;
+      if (!reducedMotion && now - lastRenderedAt < frameInterval) {
+        frame = requestAnimationFrame(render);
+        return;
+      }
+      lastRenderedAt = now;
       const delta = Math.min(0.05, Math.max(0, now - lastTime) / 1000);
       lastTime = now;
       uniforms.uTime.value = reducedMotion ? 0 : (now - startedAt) / 1000;
@@ -188,7 +204,7 @@ export function HeroColorBand({
 
     resizeObserver.observe(container);
     intersectionObserver.observe(container);
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    if (finePointer && mouseInfluence > 0) window.addEventListener("pointermove", onPointerMove, { passive: true });
     document.addEventListener("visibilitychange", onVisibilityChange);
     resize();
     start();
@@ -197,7 +213,7 @@ export function HeroColorBand({
       cancelAnimationFrame(frame);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
-      window.removeEventListener("pointermove", onPointerMove);
+      if (finePointer && mouseInfluence > 0) window.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       gl.canvas.remove();

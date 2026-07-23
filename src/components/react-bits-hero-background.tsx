@@ -1,14 +1,23 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { HeroColorBand } from "@/components/ui/hero-color-band";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import dynamic from "next/dynamic";
 import { HeroDotField } from "@/components/ui/hero-dot-field";
+
+const HeroColorBand = dynamic(
+  () => import("@/components/ui/hero-color-band").then((module) => module.HeroColorBand),
+  { ssr: false },
+);
 
 export function ReactBitsHeroBackground() {
   const reducedMotion = useReducedMotion();
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(backgroundRef, { margin: "120px 0px" });
+  const animateBackground = !reducedMotion && inView;
 
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+    <div ref={backgroundRef} className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-15%,rgba(156,0,229,.16),transparent_40%),linear-gradient(to_bottom,#050816_0%,#070817_58%,#050816_100%)]" />
 
       <HeroDotField
@@ -27,13 +36,13 @@ export function ReactBitsHeroBackground() {
       <motion.div
         className="absolute -bottom-[30%] left-[-45%] h-[170%] w-[190%] md:-bottom-[42%] md:left-[-22%] md:h-[205%] md:w-[144%]"
         initial={reducedMotion ? false : { opacity: 0 }}
-        animate={reducedMotion ? undefined : {
+        animate={animateBackground ? {
           opacity: 1,
           x: ["-14%", "9%", "15%", "-7%", "-14%"],
           y: ["14%", "-13%", "-4%", "11%", "14%"],
           rotate: [-3, 3, -2, 4, -3],
           scale: [1.02, 1.1, 1.04, 1.08, 1.02],
-        }}
+        } : undefined}
         transition={{ duration: 26, repeat: Infinity, ease: "easeInOut", opacity: { duration: .7, delay: .05, repeat: 0 } }}
       >
         <HeroColorBand
@@ -57,48 +66,48 @@ export function ReactBitsHeroBackground() {
       <motion.div
         className="absolute -left-[16%] top-[-12%] hidden size-[62vw] rounded-full bg-[radial-gradient(circle,rgba(156,0,229,.58)_0%,rgba(156,0,229,.3)_34%,rgba(156,0,229,.1)_56%,transparent_72%)] blur-[72px] mix-blend-screen md:block"
         initial={reducedMotion ? false : { opacity: 0 }}
-        animate={reducedMotion ? undefined : {
+        animate={animateBackground ? {
           opacity: 1,
           x: ["0vw", "54vw", "30vw", "7vw", "0vw"],
           y: ["0vh", "42vh", "12vh", "54vh", "0vh"],
           scale: [.9, 1.12, .98, 1.08, .9],
-        }}
+        } : undefined}
         transition={{ duration: 31, repeat: Infinity, ease: "easeInOut", opacity: { duration: .7, delay: .14, repeat: 0 } }}
       />
 
       <motion.div
         className="absolute -right-[10%] bottom-[-18%] hidden size-[46vw] rounded-full bg-[radial-gradient(circle,rgba(156,0,229,.52)_0%,rgba(156,0,229,.24)_38%,rgba(156,0,229,.08)_58%,transparent_74%)] blur-[64px] mix-blend-screen md:block"
         initial={reducedMotion ? false : { opacity: 0 }}
-        animate={reducedMotion ? undefined : {
+        animate={animateBackground ? {
           opacity: 1,
           x: ["0vw", "-42vw", "-18vw", "-55vw", "0vw"],
           y: ["0vh", "-48vh", "-12vh", "-30vh", "0vh"],
           scale: [.94, 1.08, 1.16, 1, .94],
-        }}
+        } : undefined}
         transition={{ duration: 36, repeat: Infinity, ease: "easeInOut", opacity: { duration: .7, delay: .23, repeat: 0 } }}
       />
 
       <motion.div
         className="absolute left-[32%] top-[-20%] hidden size-[38vw] rounded-full bg-[radial-gradient(circle,rgba(156,0,229,.5)_0%,rgba(156,0,229,.22)_36%,rgba(156,0,229,.08)_60%,transparent_75%)] blur-[58px] mix-blend-screen md:block"
         initial={reducedMotion ? false : { opacity: 0 }}
-        animate={reducedMotion ? undefined : {
+        animate={animateBackground ? {
           opacity: 1,
           x: ["0vw", "30vw", "8vw", "-34vw", "0vw"],
           y: ["0vh", "32vh", "58vh", "22vh", "0vh"],
           scale: [.88, 1.14, 1, 1.1, .88],
-        }}
+        } : undefined}
         transition={{ duration: 40, repeat: Infinity, ease: "easeInOut", opacity: { duration: .7, delay: .32, repeat: 0 } }}
       />
 
       <motion.div
         className="absolute right-[-18%] top-[-24%] hidden size-[50vw] rounded-full bg-[radial-gradient(circle,rgba(156,0,229,.56)_0%,rgba(156,0,229,.28)_35%,rgba(156,0,229,.09)_58%,transparent_74%)] blur-[66px] mix-blend-screen md:block"
         initial={reducedMotion ? false : { opacity: 0 }}
-        animate={reducedMotion ? undefined : {
+        animate={animateBackground ? {
           opacity: 1,
           x: ["0vw", "-18vw", "-46vw", "-12vw", "0vw"],
           y: ["0vh", "18vh", "52vh", "35vh", "0vh"],
           scale: [.92, 1.1, 1.02, 1.14, .92],
-        }}
+        } : undefined}
         transition={{ duration: 38, repeat: Infinity, ease: "easeInOut", opacity: { duration: .7, delay: .41, repeat: 0 } }}
       />
 
@@ -110,11 +119,11 @@ export function ReactBitsHeroBackground() {
       >
         <motion.div
           className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(156,0,229,.78)_0%,rgba(156,0,229,.42)_34%,rgba(156,0,229,.13)_58%,transparent_74%)] blur-[62px] mix-blend-screen"
-          animate={reducedMotion ? undefined : {
+          animate={animateBackground ? {
             x: ["0vw", "13vw", "-12vw", "6vw", "0vw"],
             y: ["0vh", "17vh", "-12vh", "9vh", "0vh"],
             scale: [1, 1.1, .96, 1.07, 1],
-          }}
+          } : undefined}
           transition={{ duration: 29, delay: .55, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.div>
