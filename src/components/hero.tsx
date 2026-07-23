@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Download, Radio, Sparkles } from "lucide-react";
-import { InteractiveDeveloperPanel } from "@/components/interactive-developer-panel";
+import { ProfilePortrait } from "@/components/profile-portrait";
 import { ReactBitsHeroBackground } from "@/components/react-bits-hero-background";
 import { portfolio } from "@/data/portfolio";
 import { useMediaQuery } from "@/hooks/use-media-query";
@@ -32,10 +32,6 @@ export function Hero() {
             <motion.span className="inline-block bg-gradient-to-r from-violet-300 via-blue-300 to-cyan-200 bg-clip-text text-transparent" style={{ backgroundSize: "200% 100%" }} animate={calmMotion ? undefined : { backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }}>Software Engineer</motion.span><br />
             <span className="text-slate-300">for real-world systems.</span>
           </motion.h1>
-
-          <motion.p variants={item} transition={{ duration: .76 }} className="max-w-[44ch] text-pretty text-[15px] leading-7 text-slate-400 sm:text-base sm:leading-8">
-            I build scalable web platforms, dependable APIs, and thoughtful interfaces—from cloud applications to national fiber infrastructure.
-          </motion.p>
 
           <motion.div variants={item} transition={{ duration: .76 }} className="flex flex-wrap items-center justify-center gap-2.5 font-mono text-[10px] text-slate-500 lg:justify-start">
             {portfolio.roles.map((role) => <span key={role} className="rounded-lg border border-white/[.07] bg-white/[.025] px-2.5 py-1.5">{role}</span>)}
@@ -81,8 +77,8 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, x: 28, scale: .97 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: 1, delay: .2, ease: [0.16, 1, 0.3, 1] }} className="w-full min-w-0 lg:pt-4">
-          <InteractiveDeveloperPanel />
+        <motion.div initial={{ opacity: 0, x: 28, scale: .97 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: 1, delay: .2, ease: [0.16, 1, 0.3, 1] }} className="flex w-full min-w-0 justify-center lg:pt-4">
+          <ProfilePortrait preload className="max-w-[34rem]" />
         </motion.div>
       </div>
     </section>

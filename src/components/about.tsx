@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Braces, Code2, Coffee, MapPin, Sparkles } from "lucide-react";
-import Image from "next/image";
+import { Braces, MapPin, Sparkles } from "lucide-react";
+import { InteractiveDeveloperPanel } from "@/components/interactive-developer-panel";
 import { Reveal } from "@/components/reveal";
 import { BorderGlow } from "@/components/ui/border-glow";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -19,19 +19,7 @@ export function About() {
       <Reveal><SectionHeading eyebrow="01 / About" title="Crafting software with clarity and care." description="A builder at heart, driven by curiosity and the satisfaction of making complex things feel simple." /></Reveal>
       <div className="grid items-center gap-14 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
         <Reveal className="relative mx-auto w-full max-w-md">
-          <div className="absolute -inset-7 rounded-[3rem] bg-violet-600/18 blur-3xl" />
-          <motion.div whileHover={{ y: -6, rotate: 1, scale: 1.012 }} transition={{ type: "spring", stiffness: 260, damping: 24 }} className="relative aspect-square rounded-[2.25rem] bg-gradient-to-br from-violet-400 via-blue-500 to-cyan-300 p-px shadow-[0_28px_90px_rgba(0,0,0,.34),0_0_70px_rgba(124,58,237,.28)]">
-            <div className="relative size-full overflow-hidden rounded-[calc(2.25rem-1px)] border-[9px] border-[#070a18] bg-[#080b1b]">
-              <Image src={portfolio.profileImage} alt="Portrait of Kishor" fill sizes="(max-width: 640px) 92vw, (max-width: 1024px) 28rem, 34vw" className="object-cover object-center" />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050816]/75 via-transparent to-violet-950/10" />
-              <div className="pointer-events-none absolute inset-0 opacity-15 [background-image:linear-gradient(rgba(255,255,255,.14)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:32px_32px] [mask-image:linear-gradient(to_bottom,transparent,black)]" />
-              <span className="pointer-events-none absolute left-4 top-4 size-8 border-l border-t border-violet-200/60" />
-              <span className="pointer-events-none absolute bottom-4 right-4 size-8 border-b border-r border-cyan-200/60" />
-              <Code2 className="absolute right-4 top-4 size-11 rounded-xl border border-cyan-300/20 bg-[#071022]/75 p-2.5 text-cyan-300 shadow-[0_0_24px_rgba(34,211,238,.2)] backdrop-blur-xl" />
-              <Coffee className="absolute bottom-4 left-4 size-11 rounded-xl border border-violet-300/20 bg-[#0b0820]/75 p-2.5 text-violet-300 shadow-[0_0_24px_rgba(124,58,237,.2)] backdrop-blur-xl" />
-              <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full border border-white/10 bg-[#050816]/70 px-4 py-2 text-xs text-slate-200 shadow-[0_8px_30px_rgba(0,0,0,.28)] backdrop-blur-xl"><span className="size-2 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399]" /> Open to create</div>
-            </div>
-          </motion.div>
+          <InteractiveDeveloperPanel />
         </Reveal>
 
         <Reveal delay={.1} className="text-center lg:text-left">
