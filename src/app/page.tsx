@@ -1,7 +1,6 @@
 import { About } from "@/components/about";
 import { Contact } from "@/components/contact";
 import { DesktopScrollEffects } from "@/components/desktop-scroll-effects";
-import { CursorGlow } from "@/components/cursor-glow";
 import { Footer } from "@/components/footer";
 import { Hero } from "@/components/hero";
 import { Navbar } from "@/components/navbar";
@@ -16,7 +15,6 @@ export default function Home() {
       <a href="#main-content" className="skip-link">Skip to content</a>
       <SmoothScroll />
       <DesktopScrollEffects />
-      <CursorGlow />
       <Navbar />
       <main id="main-content" className="relative z-10 overflow-hidden">
         <Hero />

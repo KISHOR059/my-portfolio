@@ -20,7 +20,5 @@ button, a { touch-action: manipulation; }
 .footer-icon:hover { transform: translateY(-2px); border-color: rgba(103,232,249,.25); color: #67e8f9; }
 .skip-link { position: fixed; top: -4rem; left: 1rem; z-index: 100; border-radius: .75rem; background: white; padding: .7rem 1rem; color: #050816; font-size: .875rem; font-weight: 700; transition: top 180ms ease; }
 .skip-link:focus { top: 1rem; }
-.cursor-glow { display: none; }
-@media (hover: hover) and (pointer: fine) { .cursor-glow { display: block; } }
 @media (min-width: 640px) { .section-shell { padding: 5.5rem 1rem; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
