@@ -114,9 +114,8 @@ export function Skills() {
 
                       <div className="relative mt-auto flex items-end gap-3 pt-6">
                         <div className="flex-1">
-                          <div className="mb-2 flex items-center justify-between font-mono text-[8px] uppercase tracking-[.14em] text-slate-700">
+                          <div className="mb-2 font-mono text-[8px] uppercase tracking-[.14em] text-slate-700">
                             <span>System readiness</span>
-                            <span className="text-slate-500">{completion}%</span>
                           </div>
                           <div className="h-1 overflow-hidden rounded-full bg-white/[.045]">
                             <motion.div
