@@ -48,6 +48,7 @@ const fragment = `
   uniform float uFadeTop;
   uniform vec2 uPointer;
   uniform float uMouseInfluence;
+  uniform float uPointerEnergy;
   uniform int uIterations;
   uniform float uIntensity;
   varying vec2 vUv;
@@ -62,7 +63,7 @@ const fragment = `
     vec2 q = vec2(rotated.x * aspect, rotated.y);
     q *= 1.0 / max(uScale, 0.0001);
     q /= 0.5 + 0.2 * dot(q, q);
-    q += (uPointer - rotated) * uMouseInfluence * 0.2;
+    q += (uPointer - rotated) * uMouseInfluence * uPointerEnergy * 0.2;
     q += 0.2 * cos(t) - 7.56;
 
     for (int i = 0; i < 5; i++) {
@@ -144,6 +145,7 @@ export function HeroColorBand({
       uFadeTop: { value: fadeTop },
       uPointer: { value: [0, 0] as Vec2 },
       uMouseInfluence: { value: mouseInfluence },
+      uPointerEnergy: { value: 0 },
       uIterations: { value: iterations },
       uIntensity: { value: intensity },
     };
@@ -151,10 +153,12 @@ export function HeroColorBand({
     const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
     const pointerTarget: Vec2 = [0, 0];
     const pointerCurrent: Vec2 = [0, 0];
+    const pointerVelocity: Vec2 = [0, 0];
     let frame = 0;
     let visible = true;
     let lastTime = performance.now();
     let lastRenderedAt = 0;
+    let lastPointerAt = 0;
     const startedAt = lastTime;
 
     const resize = () => {
@@ -170,8 +174,13 @@ export function HeroColorBand({
     };
     const onPointerMove = (event: PointerEvent) => {
       const rect = container.getBoundingClientRect();
-      pointerTarget[0] = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      pointerTarget[1] = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
+      const normalizedX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      const normalizedY = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
+      const inside = normalizedX >= -1 && normalizedX <= 1 && normalizedY >= -1 && normalizedY <= 1;
+      if (!inside) return;
+      pointerTarget[0] = Math.max(-1, Math.min(1, normalizedX));
+      pointerTarget[1] = Math.max(-1, Math.min(1, normalizedY));
+      lastPointerAt = performance.now();
     };
     const render = (now: number) => {
       if (!visible || document.hidden) return;
@@ -183,9 +192,20 @@ export function HeroColorBand({
       const delta = Math.min(0.05, Math.max(0, now - lastTime) / 1000);
       lastTime = now;
       uniforms.uTime.value = reducedMotion ? 0 : (now - startedAt) / 1000;
-      const amount = Math.min(1, delta * 4);
-      pointerCurrent[0] += (pointerTarget[0] - pointerCurrent[0]) * amount;
-      pointerCurrent[1] += (pointerTarget[1] - pointerCurrent[1]) * amount;
+      const pointerActive = finePointer && now - lastPointerAt < 850;
+      if (!pointerActive) {
+        const returnAmount = Math.min(1, delta * 1.8);
+        pointerTarget[0] += (0 - pointerTarget[0]) * returnAmount;
+        pointerTarget[1] += (0 - pointerTarget[1]) * returnAmount;
+      }
+      const spring = 18;
+      const damping = Math.exp(-8 * delta);
+      pointerVelocity[0] = (pointerVelocity[0] + (pointerTarget[0] - pointerCurrent[0]) * spring * delta) * damping;
+      pointerVelocity[1] = (pointerVelocity[1] + (pointerTarget[1] - pointerCurrent[1]) * spring * delta) * damping;
+      pointerCurrent[0] += pointerVelocity[0];
+      pointerCurrent[1] += pointerVelocity[1];
+      const energyTarget = pointerActive ? 1 : 0;
+      uniforms.uPointerEnergy.value += (energyTarget - uniforms.uPointerEnergy.value) * Math.min(1, delta * (pointerActive ? 5 : 1.7));
       uniforms.uPointer.value = [pointerCurrent[0], pointerCurrent[1]];
       renderer.render({ scene: mesh });
       if (!reducedMotion) frame = requestAnimationFrame(render);
