@@ -48,7 +48,7 @@ export function PortfolioLoader() {
           exit={{ opacity: 0 }}
           transition={{ duration: reducedMotion ? 0.12 : compactMotion ? 0.3 : 0.42, ease: [0.76, 0, 0.24, 1] }}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(156,0,229,.25),transparent_28%),radial-gradient(circle_at_50%_55%,rgba(34,211,238,.08),transparent_42%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(179,0,179,.25),transparent_28%),radial-gradient(circle_at_50%_55%,rgba(34,211,238,.08),transparent_42%)]" />
           <div className="absolute inset-0 hidden opacity-25 sm:block [background-image:radial-gradient(circle,rgba(148,163,184,.48)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(circle_at_center,black,transparent_72%)]" />
 
           <motion.div
@@ -59,11 +59,11 @@ export function PortfolioLoader() {
           >
             <div className="relative grid size-36 place-items-center sm:size-40">
               <motion.div
-                className="absolute inset-0 transform-gpu rounded-full border border-violet-400/25 will-change-transform"
+                className="absolute inset-0 transform-gpu rounded-full border border-[#b300b3]/25 will-change-transform"
                 animate={reducedMotion ? undefined : { rotate: 360 }}
                 transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
               >
-                <span className="absolute left-1/2 top-[-4px] size-2 -translate-x-1/2 rounded-full bg-violet-300 shadow-[0_0_18px_#9c00e5]" />
+                <span className="absolute left-1/2 top-[-4px] size-2 -translate-x-1/2 rounded-full bg-[#b300b3] shadow-[0_0_18px_#b300b3]" />
               </motion.div>
               {!compactMotion ? (
                 <motion.div
@@ -73,11 +73,11 @@ export function PortfolioLoader() {
                 />
               ) : null}
               <motion.div
-                className="absolute inset-5 transform-gpu rounded-full bg-[radial-gradient(circle,rgba(156,0,229,.34),rgba(156,0,229,.08)_48%,transparent_72%)] will-change-transform"
+                className="absolute inset-5 transform-gpu rounded-full bg-[radial-gradient(circle,rgba(179,0,179,.34),rgba(179,0,179,.08)_48%,transparent_72%)] will-change-transform"
                 animate={reducedMotion ? undefined : compactMotion ? { opacity: [0.55, 0.82, 0.55] } : { scale: [0.92, 1.12, 0.92], opacity: [0.55, 0.9, 0.55] }}
                 transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
               />
-              <div className="absolute inset-8 rounded-[1.65rem] border border-white/10 bg-[linear-gradient(145deg,rgba(156,0,229,.2),rgba(9,13,32,.94)_48%,rgba(34,211,238,.1))] shadow-[0_0_38px_rgba(156,0,229,.26),inset_0_1px_0_rgba(255,255,255,.14)]" />
+              <div className="absolute inset-8 rounded-[1.65rem] border border-white/10 bg-[linear-gradient(145deg,rgba(179,0,179,.2),rgba(9,13,32,.94)_48%,rgba(34,211,238,.1))] shadow-[0_0_38px_rgba(179,0,179,.26),inset_0_1px_0_rgba(255,255,255,.14)]" />
               <motion.span
                 className="relative font-mono text-2xl font-bold tracking-[-.12em] text-white"
                 animate={reducedMotion || compactMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
@@ -97,7 +97,7 @@ export function PortfolioLoader() {
             <div className="mt-8 w-full">
               <div className="h-px overflow-hidden bg-white/10">
                 <motion.div
-                  className="h-full origin-left bg-gradient-to-r from-violet-500 via-fuchsia-400 to-cyan-300 shadow-[0_0_14px_rgba(34,211,238,.8)]"
+                  className="h-full origin-left bg-gradient-to-r from-[#b300b3] via-fuchsia-400 to-cyan-300 shadow-[0_0_14px_rgba(34,211,238,.8)]"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ duration: reducedMotion ? 0.35 : compactMotion ? 1.45 : 1.85, ease: [0.22, 1, 0.36, 1] }}
