@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CloudCog, Container, Database, Layers3, PanelsTopLeft, Radio, ServerCog, Sparkles, Wrench } from "lucide-react";
+import { Activity, CloudCog, Container, Database, Layers3, PanelsTopLeft, Radio, ServerCog, Sparkles, Wrench } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { TechnologyLogoLoop } from "@/components/technology-logo-loop";
 import { BorderGlow } from "@/components/ui/border-glow";
@@ -20,7 +20,6 @@ const iconStyles = [
   "border-blue-300/20 bg-blue-400/10 text-blue-200 shadow-[0_0_28px_rgba(59,130,246,.18)]",
   "border-cyan-300/20 bg-cyan-400/10 text-cyan-200 shadow-[0_0_28px_rgba(34,211,238,.16)]",
 ] as const;
-const systemModules = ["Sync", "Build", "Live"] as const;
 const uniqueSkillCount = new Set(portfolio.skillGroups.flatMap((group) => group.skills)).size;
 
 export function Skills() {
@@ -76,10 +75,9 @@ export function Skills() {
                     <motion.article
                       whileHover={{ y: -4 }}
                       transition={{ type: "spring", stiffness: 280, damping: 25 }}
-                      className="relative flex h-full flex-col overflow-hidden p-5 sm:p-6"
+                      className="relative flex h-full flex-col overflow-hidden rounded-[1.35rem] bg-[linear-gradient(145deg,rgba(255,255,255,.045),rgba(5,8,22,.18)_52%,rgba(179,0,179,.035))] p-4 sm:p-5"
                     >
                       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 [background:linear-gradient(115deg,transparent_20%,rgba(255,255,255,.025)_48%,transparent_75%)]" />
-                      <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
                       <div className="relative flex items-start justify-between gap-4">
                         <div className="flex items-center gap-3.5">
@@ -95,61 +93,53 @@ export function Skills() {
                             <p className="mt-1 font-mono text-[8px] uppercase tracking-[.16em] text-slate-600">{String(group.skills.length).padStart(2, "0")} capabilities</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-1.5 font-mono text-[8px] text-slate-700">
-                          <Radio className="size-3 text-emerald-400/70" />
+                        <div className="flex items-center gap-1.5 rounded-full border border-emerald-300/10 bg-emerald-400/[.04] px-2 py-1 font-mono text-[8px] text-slate-500">
+                          <Radio className="size-3 text-emerald-400/80" />
                           0{index + 1}
                         </div>
                       </div>
 
                       <div className="relative my-5 h-px bg-gradient-to-r from-white/[.09] via-white/[.045] to-transparent" />
-
                       <div className="relative flex flex-wrap gap-2">
                         {group.skills.map((skill) => (
-                          <span key={skill} className="inline-flex items-center gap-2 rounded-xl border border-white/[.07] bg-white/[.025] px-3 py-2 text-[11px] font-medium text-slate-300 shadow-[inset_0_1px_0_rgba(255,255,255,.025)] transition-[border-color,background-color,color,transform] duration-300 group-hover:border-white/[.12] group-hover:bg-white/[.045] group-hover:text-white">
+                          <span key={skill} className="group/skill inline-flex items-center gap-2 rounded-lg border border-white/[.07] bg-[#0b0e20]/75 px-2.5 py-1.5 text-[10px] font-medium text-slate-400 shadow-[inset_0_1px_0_rgba(255,255,255,.04)] transition-[border-color,background-color,color,transform] duration-300 hover:-translate-y-0.5 hover:border-violet-300/25 hover:bg-white/[.06] hover:text-white">
                             <span className={`size-1 rounded-full ${paletteIndex === 0 ? "bg-violet-300" : paletteIndex === 1 ? "bg-blue-300" : "bg-cyan-300"}`} />
                             {skill}
                           </span>
                         ))}
                       </div>
 
-                      <div className="relative mt-auto pt-6">
-                        <div className="mb-2 flex items-center justify-between font-mono text-[8px] uppercase tracking-[.14em] text-slate-700">
-                          <span>System status</span>
-                          <span className="text-emerald-400/70">Online</span>
-                        </div>
-                        <div className="grid grid-cols-3 gap-1.5">
-                          {systemModules.map((module, moduleIndex) => (
+                      <div className="relative mt-auto flex items-end gap-3 pt-6">
+                        <div className="flex-1">
+                          <div className="mb-2 font-mono text-[8px] uppercase tracking-[.14em] text-slate-700">
+                            <span>System readiness</span>
+                          </div>
+                          <div className="relative h-1 overflow-hidden rounded-full bg-white/[.045]">
                             <motion.div
-                              key={module}
-                              initial={{ opacity: 0, y: 7, scale: .9 }}
-                              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                              initial={{ scaleX: 0, opacity: .45 }}
+                              whileInView={{ scaleX: 1, opacity: 1 }}
                               viewport={{ once: true, amount: .6 }}
-                              transition={{ delay: .14 + index * .05 + moduleIndex * .08, type: "spring", stiffness: 260, damping: 20 }}
-                              className="relative flex h-7 transform-gpu items-center justify-center gap-1.5 overflow-hidden rounded-lg border border-white/[.07] bg-white/[.025] font-mono text-[7px] tracking-[.12em] text-slate-500 shadow-[inset_0_1px_0_rgba(255,255,255,.03)]"
+                              transition={{ duration: 1.05, delay: .08 + index * .06, ease: [0.16, 1, 0.3, 1] }}
+                              className={`relative h-full origin-left rounded-full ${paletteIndex === 0 ? "bg-gradient-to-r from-violet-600 to-violet-300" : paletteIndex === 1 ? "bg-gradient-to-r from-blue-600 to-blue-300" : "bg-gradient-to-r from-cyan-600 to-cyan-300"}`}
                             >
                               <motion.span
-                                aria-hidden="true"
-                                className="pointer-events-none absolute inset-0 rounded-lg border border-white/10"
-                                animate={{ opacity: [.08, .5, .08] }}
-                                transition={{ duration: 1.8, delay: moduleIndex * .2 + index * .08, repeat: Infinity, ease: "easeInOut" }}
+                                initial={{ x: "-140%", opacity: 0 }}
+                                whileInView={{ x: "520%", opacity: [0, .8, 0] }}
+                                viewport={{ once: true, amount: .6 }}
+                                transition={{ duration: .62, delay: .72 + index * .06, ease: "easeOut" }}
+                                className="absolute inset-y-0 left-0 w-7 bg-gradient-to-r from-transparent via-white/80 to-transparent"
                               />
-                              <span aria-hidden="true" className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2">
-                                <motion.span
-                                  className={`block size-1 rounded-full ${paletteIndex === 0 ? "bg-violet-300 shadow-[0_0_8px_#c4b5fd]" : paletteIndex === 1 ? "bg-blue-300 shadow-[0_0_8px_#93c5fd]" : "bg-cyan-300 shadow-[0_0_8px_#67e8f9]"}`}
-                                  animate={{ scale: [1, 1.7, 1], opacity: [.55, 1, .55] }}
-                                  transition={{ duration: 1.15, delay: moduleIndex * .16 + index * .08, repeat: Infinity, ease: "easeInOut" }}
-                                />
-                              </span>
-                              <motion.span
-                                className="relative"
-                                animate={{ y: [0, -1, 0], opacity: [.58, 1, .58] }}
-                                transition={{ duration: 1.8, delay: moduleIndex * .2 + index * .08, repeat: Infinity, ease: "easeInOut" }}
-                              >
-                                {module}
-                              </motion.span>
                             </motion.div>
-                          ))}
+                          </div>
                         </div>
+                        <motion.span
+                          initial={{ opacity: 0, scale: .6 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true, amount: .6 }}
+                          transition={{ delay: .82 + index * .06, type: "spring", stiffness: 260, damping: 18 }}
+                        >
+                          <Activity className="size-3.5 text-emerald-400/70" />
+                        </motion.span>
                       </div>
                     </motion.article>
                   </BorderGlow>
