@@ -102,7 +102,7 @@ export function Skills() {
                       <div className="relative my-5 h-px bg-gradient-to-r from-white/[.09] via-white/[.045] to-transparent" />
                       <div className="relative flex flex-wrap gap-2">
                         {group.skills.map((skill) => (
-                          <span key={skill} className="group/skill inline-flex items-center gap-2 rounded-lg border border-white/[.07] bg-[#0b0e20]/75 px-2.5 py-1.5 text-[10px] font-medium text-slate-400 shadow-[inset_0_1px_0_rgba(255,255,255,.04)] transition-[border-color,background-color,color,transform] duration-300 hover:-translate-y-0.5 hover:border-violet-300/25 hover:bg-white/[.06] hover:text-white">
+                          <span key={skill} className="group/skill inline-flex items-center gap-2 rounded-xl border border-white/[.07] bg-[#0b0e20]/75 px-3 py-2 text-[11px] font-medium text-slate-400 shadow-[inset_0_1px_0_rgba(255,255,255,.04)] transition-[border-color,background-color,color,transform] duration-300 hover:-translate-y-0.5 hover:border-violet-300/25 hover:bg-white/[.06] hover:text-white">
                             <span className={`size-1 rounded-full ${paletteIndex === 0 ? "bg-violet-300" : paletteIndex === 1 ? "bg-blue-300" : "bg-cyan-300"}`} />
                             {skill}
                           </span>
