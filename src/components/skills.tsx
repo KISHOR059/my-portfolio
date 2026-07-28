@@ -57,7 +57,6 @@ export function Skills() {
             {portfolio.skillGroups.map((group, index) => {
               const Icon = icons[group.icon];
               const paletteIndex = index % glowPalettes.length;
-              const completion = 72 + ((index * 7) % 24);
 
               return (
                 <Reveal key={group.category} delay={index * .045} className="h-full">
@@ -117,17 +116,32 @@ export function Skills() {
                           <div className="mb-2 font-mono text-[8px] uppercase tracking-[.14em] text-slate-700">
                             <span>System readiness</span>
                           </div>
-                          <div className="h-1 overflow-hidden rounded-full bg-white/[.045]">
+                          <div className="relative h-1 overflow-hidden rounded-full bg-white/[.045]">
                             <motion.div
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${completion}%` }}
-                              viewport={{ once: true }}
-                              transition={{ duration: .9, delay: .08 + index * .04, ease: [0.16, 1, 0.3, 1] }}
-                              className={`h-full rounded-full ${paletteIndex === 0 ? "bg-gradient-to-r from-violet-600 to-violet-300" : paletteIndex === 1 ? "bg-gradient-to-r from-blue-600 to-blue-300" : "bg-gradient-to-r from-cyan-600 to-cyan-300"}`}
-                            />
+                              initial={{ scaleX: 0, opacity: .45 }}
+                              whileInView={{ scaleX: 1, opacity: 1 }}
+                              viewport={{ once: true, amount: .6 }}
+                              transition={{ duration: 1.05, delay: .08 + index * .06, ease: [0.16, 1, 0.3, 1] }}
+                              className={`relative h-full origin-left rounded-full ${paletteIndex === 0 ? "bg-gradient-to-r from-violet-600 to-violet-300" : paletteIndex === 1 ? "bg-gradient-to-r from-blue-600 to-blue-300" : "bg-gradient-to-r from-cyan-600 to-cyan-300"}`}
+                            >
+                              <motion.span
+                                initial={{ x: "-140%", opacity: 0 }}
+                                whileInView={{ x: "520%", opacity: [0, .8, 0] }}
+                                viewport={{ once: true, amount: .6 }}
+                                transition={{ duration: .62, delay: .72 + index * .06, ease: "easeOut" }}
+                                className="absolute inset-y-0 left-0 w-7 bg-gradient-to-r from-transparent via-white/80 to-transparent"
+                              />
+                            </motion.div>
                           </div>
                         </div>
-                        <Activity className="size-3.5 text-emerald-400/70" />
+                        <motion.span
+                          initial={{ opacity: 0, scale: .6 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true, amount: .6 }}
+                          transition={{ delay: .82 + index * .06, type: "spring", stiffness: 260, damping: 18 }}
+                        >
+                          <Activity className="size-3.5 text-emerald-400/70" />
+                        </motion.span>
                       </div>
                     </motion.article>
                   </BorderGlow>
