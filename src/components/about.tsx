@@ -17,8 +17,8 @@ export function About() {
   return (
     <section id="about" className="section-shell scroll-mt-20">
       <Reveal><SectionHeading eyebrow="01 / About" title="Crafting software with clarity and care." description="A builder at heart, driven by curiosity and the satisfaction of making complex things feel simple." /></Reveal>
-      <div className="grid items-center gap-14 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
-        <Reveal className="relative mx-auto w-full max-w-md">
+      <div className="grid items-center gap-14 lg:grid-cols-[.8fr_1.2fr] lg:gap-12">
+        <Reveal className="relative mx-auto w-full max-w-lg">
           <InteractiveDeveloperPanel />
         </Reveal>
 
