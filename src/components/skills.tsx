@@ -125,10 +125,28 @@ export function Skills() {
                               whileInView={{ opacity: 1, y: 0, scale: 1 }}
                               viewport={{ once: true, amount: .6 }}
                               transition={{ delay: .14 + index * .05 + moduleIndex * .08, type: "spring", stiffness: 260, damping: 20 }}
-                              className="flex h-7 items-center justify-center gap-1.5 rounded-lg border border-white/[.07] bg-white/[.025] font-mono text-[7px] tracking-[.12em] text-slate-500 shadow-[inset_0_1px_0_rgba(255,255,255,.03)]"
+                              className="relative flex h-7 transform-gpu items-center justify-center gap-1.5 overflow-hidden rounded-lg border border-white/[.07] bg-white/[.025] font-mono text-[7px] tracking-[.12em] text-slate-500 shadow-[inset_0_1px_0_rgba(255,255,255,.03)]"
                             >
-                              <span className={`size-1 rounded-full ${paletteIndex === 0 ? "bg-violet-300 shadow-[0_0_8px_#c4b5fd]" : paletteIndex === 1 ? "bg-blue-300 shadow-[0_0_8px_#93c5fd]" : "bg-cyan-300 shadow-[0_0_8px_#67e8f9]"}`} />
-                              {module}
+                              <motion.span
+                                aria-hidden="true"
+                                className="pointer-events-none absolute inset-0 rounded-lg border border-white/10"
+                                animate={{ opacity: [.08, .5, .08] }}
+                                transition={{ duration: 1.8, delay: moduleIndex * .2 + index * .08, repeat: Infinity, ease: "easeInOut" }}
+                              />
+                              <span aria-hidden="true" className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2">
+                                <motion.span
+                                  className={`block size-1 rounded-full ${paletteIndex === 0 ? "bg-violet-300 shadow-[0_0_8px_#c4b5fd]" : paletteIndex === 1 ? "bg-blue-300 shadow-[0_0_8px_#93c5fd]" : "bg-cyan-300 shadow-[0_0_8px_#67e8f9]"}`}
+                                  animate={{ scale: [1, 1.7, 1], opacity: [.55, 1, .55] }}
+                                  transition={{ duration: 1.15, delay: moduleIndex * .16 + index * .08, repeat: Infinity, ease: "easeInOut" }}
+                                />
+                              </span>
+                              <motion.span
+                                className="relative"
+                                animate={{ y: [0, -1, 0], opacity: [.58, 1, .58] }}
+                                transition={{ duration: 1.8, delay: moduleIndex * .2 + index * .08, repeat: Infinity, ease: "easeInOut" }}
+                              >
+                                {module}
+                              </motion.span>
                             </motion.div>
                           ))}
                         </div>
