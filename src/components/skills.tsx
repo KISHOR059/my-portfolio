@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Activity, CloudCog, Container, Database, Layers3, PanelsTopLeft, Radio, ServerCog, Sparkles, Wrench } from "lucide-react";
+import { CloudCog, Container, Database, Layers3, PanelsTopLeft, Radio, ServerCog, Sparkles, Wrench } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { TechnologyLogoLoop } from "@/components/technology-logo-loop";
 import { BorderGlow } from "@/components/ui/border-glow";
@@ -20,6 +20,7 @@ const iconStyles = [
   "border-blue-300/20 bg-blue-400/10 text-blue-200 shadow-[0_0_28px_rgba(59,130,246,.18)]",
   "border-cyan-300/20 bg-cyan-400/10 text-cyan-200 shadow-[0_0_28px_rgba(34,211,238,.16)]",
 ] as const;
+const systemModules = ["Sync", "Build", "Live"] as const;
 const uniqueSkillCount = new Set(portfolio.skillGroups.flatMap((group) => group.skills)).size;
 
 export function Skills() {
@@ -111,37 +112,26 @@ export function Skills() {
                         ))}
                       </div>
 
-                      <div className="relative mt-auto flex items-end gap-3 pt-6">
-                        <div className="flex-1">
-                          <div className="mb-2 font-mono text-[8px] uppercase tracking-[.14em] text-slate-700">
-                            <span>System readiness</span>
-                          </div>
-                          <div className="relative h-1 overflow-hidden rounded-full bg-white/[.045]">
-                            <motion.div
-                              initial={{ scaleX: 0, opacity: .45 }}
-                              whileInView={{ scaleX: 1, opacity: 1 }}
-                              viewport={{ once: true, amount: .6 }}
-                              transition={{ duration: 1.05, delay: .08 + index * .06, ease: [0.16, 1, 0.3, 1] }}
-                              className={`relative h-full origin-left rounded-full ${paletteIndex === 0 ? "bg-gradient-to-r from-violet-600 to-violet-300" : paletteIndex === 1 ? "bg-gradient-to-r from-blue-600 to-blue-300" : "bg-gradient-to-r from-cyan-600 to-cyan-300"}`}
-                            >
-                              <motion.span
-                                initial={{ x: "-140%", opacity: 0 }}
-                                whileInView={{ x: "520%", opacity: [0, .8, 0] }}
-                                viewport={{ once: true, amount: .6 }}
-                                transition={{ duration: .62, delay: .72 + index * .06, ease: "easeOut" }}
-                                className="absolute inset-y-0 left-0 w-7 bg-gradient-to-r from-transparent via-white/80 to-transparent"
-                              />
-                            </motion.div>
-                          </div>
+                      <div className="relative mt-auto pt-6">
+                        <div className="mb-2 flex items-center justify-between font-mono text-[8px] uppercase tracking-[.14em] text-slate-700">
+                          <span>System status</span>
+                          <span className="text-emerald-400/70">Online</span>
                         </div>
-                        <motion.span
-                          initial={{ opacity: 0, scale: .6 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          viewport={{ once: true, amount: .6 }}
-                          transition={{ delay: .82 + index * .06, type: "spring", stiffness: 260, damping: 18 }}
-                        >
-                          <Activity className="size-3.5 text-emerald-400/70" />
-                        </motion.span>
+                        <div className="grid grid-cols-3 gap-1.5">
+                          {systemModules.map((module, moduleIndex) => (
+                            <motion.div
+                              key={module}
+                              initial={{ opacity: 0, y: 7, scale: .9 }}
+                              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                              viewport={{ once: true, amount: .6 }}
+                              transition={{ delay: .14 + index * .05 + moduleIndex * .08, type: "spring", stiffness: 260, damping: 20 }}
+                              className="flex h-7 items-center justify-center gap-1.5 rounded-lg border border-white/[.07] bg-white/[.025] font-mono text-[7px] tracking-[.12em] text-slate-500 shadow-[inset_0_1px_0_rgba(255,255,255,.03)]"
+                            >
+                              <span className={`size-1 rounded-full ${paletteIndex === 0 ? "bg-violet-300 shadow-[0_0_8px_#c4b5fd]" : paletteIndex === 1 ? "bg-blue-300 shadow-[0_0_8px_#93c5fd]" : "bg-cyan-300 shadow-[0_0_8px_#67e8f9]"}`} />
+                              {module}
+                            </motion.div>
+                          ))}
+                        </div>
                       </div>
                     </motion.article>
                   </BorderGlow>
