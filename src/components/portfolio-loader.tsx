@@ -67,7 +67,7 @@ export function PortfolioLoader() {
               <motion.div
                 className="absolute inset-0 transform-gpu rounded-full border border-[#b300b3]/25 will-change-transform"
                 animate={reducedMotion ? undefined : { rotate: 360 }}
-                transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 4.5 : 5.5, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: reducedMotion ? 0.4 : compactMotion ? 4.2 : 5.2, repeat: Infinity, ease: "linear" }}
               >
                 <span className="absolute left-1/2 top-[-4px] size-2 -translate-x-1/2 rounded-full bg-[#b300b3] shadow-[0_0_18px_#b300b3]" />
               </motion.div>
@@ -75,7 +75,7 @@ export function PortfolioLoader() {
                 <motion.div
                   className="absolute inset-4 transform-gpu rounded-full border border-dashed border-cyan-300/25 will-change-transform"
                   animate={reducedMotion ? undefined : { rotate: -360 }}
-                  transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 4.5 : 5.5, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: reducedMotion ? 0.4 : compactMotion ? 4.2 : 5.2, repeat: Infinity, ease: "linear" }}
                 />
               ) : null}
               <motion.div
