@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const bootSteps = ["Interface", "Experience", "Systems"];
@@ -9,6 +9,10 @@ export function PortfolioLoader() {
   const [visible, setVisible] = useState(true);
   const [compactMotion, setCompactMotion] = useState(false);
   const [progressComplete, setProgressComplete] = useState(false);
+  const progress = useMotionValue(0);
+  const percentage = useTransform(progress, (value) => `${Math.round(value * 100)}%`);
+  const orbitRotation = useTransform(progress, [0, 1], [0, 360]);
+  const reverseOrbitRotation = useTransform(progress, [0, 1], [0, -360]);
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -29,6 +33,16 @@ export function PortfolioLoader() {
       document.body.style.overflow = previousOverflow;
     };
   }, [compactMotion, reducedMotion]);
+
+  useEffect(() => {
+    progress.set(0);
+    const controls = animate(progress, 1, {
+      duration: reducedMotion ? 0.45 : compactMotion ? 4.5 : 5.5,
+      ease: "linear",
+      onComplete: () => setProgressComplete(true),
+    });
+    return () => controls.stop();
+  }, [compactMotion, progress, reducedMotion]);
 
   useEffect(() => {
     if (!progressComplete || !visible) return;
@@ -66,16 +80,14 @@ export function PortfolioLoader() {
             <div className="relative grid size-36 place-items-center sm:size-40">
               <motion.div
                 className="absolute inset-0 transform-gpu rounded-full border border-[#b300b3]/25 will-change-transform"
-                animate={reducedMotion ? undefined : { rotate: 360 }}
-                transition={{ duration: reducedMotion ? 0.4 : compactMotion ? 4.7 : 5.7, repeat: Infinity, ease: "linear" }}
+                style={{ rotate: orbitRotation }}
               >
                 <span className="absolute left-1/2 top-[-4px] size-2 -translate-x-1/2 rounded-full bg-[#b300b3] shadow-[0_0_18px_#b300b3]" />
               </motion.div>
               {!compactMotion ? (
                 <motion.div
                   className="absolute inset-4 transform-gpu rounded-full border border-dashed border-cyan-300/25 will-change-transform"
-                  animate={reducedMotion ? undefined : { rotate: -360 }}
-                  transition={{ duration: reducedMotion ? 0.4 : compactMotion ? 4.7 : 5.7, repeat: Infinity, ease: "linear" }}
+                  style={{ rotate: reverseOrbitRotation }}
                 />
               ) : null}
               <motion.div
@@ -104,24 +116,24 @@ export function PortfolioLoader() {
               <div className="h-px overflow-hidden bg-white/10">
                 <motion.div
                   className="h-full origin-left bg-gradient-to-r from-[#b300b3] via-fuchsia-400 to-cyan-300 shadow-[0_0_14px_rgba(34,211,238,.8)]"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  onAnimationComplete={() => setProgressComplete(true)}
-                  transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 4.5 : 5.5, ease: "linear" }}
+                  style={{ scaleX: progress }}
                 />
               </div>
-              <div className="mt-3 flex items-center justify-between gap-2 font-mono text-[8px] uppercase tracking-[.16em] text-slate-500 sm:text-[9px]">
-                {bootSteps.map((step, index) => (
-                  <motion.span
-                    key={step}
-                    initial={{ opacity: 0.28 }}
-                    animate={{ opacity: 1 }}
-                    className={index === bootSteps.length - 1 ? "text-cyan-300" : "text-slate-400"}
-                    transition={{ delay: reducedMotion ? 0 : (compactMotion ? 0.18 : 0.3) + index * (compactMotion ? 0.18 : 0.28), duration: 0.3 }}
-                  >
-                    {String(index + 1).padStart(2, "0")} / {step}
-                  </motion.span>
-                ))}
+              <div className="mt-3 flex items-center justify-between gap-3">
+                <div className="flex min-w-0 items-center justify-between gap-2 font-mono text-[8px] uppercase tracking-[.16em] text-slate-500 sm:gap-3 sm:text-[9px]">
+                  {bootSteps.map((step, index) => (
+                    <motion.span
+                      key={step}
+                      initial={{ opacity: 0.28 }}
+                      animate={{ opacity: 1 }}
+                      className={index === bootSteps.length - 1 ? "text-cyan-300" : "text-slate-400"}
+                      transition={{ delay: reducedMotion ? 0 : (compactMotion ? 0.18 : 0.3) + index * (compactMotion ? 0.18 : 0.28), duration: 0.3 }}
+                    >
+                      {String(index + 1).padStart(2, "0")} / {step}
+                    </motion.span>
+                  ))}
+                </div>
+                <motion.span className="shrink-0 font-mono text-sm font-semibold tabular-nums text-cyan-200">{percentage}</motion.span>
               </div>
             </div>
 
