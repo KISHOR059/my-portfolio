@@ -1,5 +1,6 @@
 import { About } from "@/components/about";
 import { Contact } from "@/components/contact";
+import { Timeline } from "@/components/timeline";
 import { DesktopScrollEffects } from "@/components/desktop-scroll-effects";
 import { Footer } from "@/components/footer";
 import { Hero } from "@/components/hero";
@@ -21,6 +22,7 @@ export default function Home() {
         <About />
         <Skills />
         <Projects />
+        <Timeline />
         <Contact />
       </main>
       <Reveal><Footer /></Reveal>

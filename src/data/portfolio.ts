@@ -81,20 +81,19 @@ export const portfolio = {
   ],
   experience: [
     {
-      period: "January 2025 — Present",
+      period: "May 2025 — Present",
       role: "Junior Software Developer",
-      company: "Azotos Software Technologies Pvt. Ltd.",
       project: "BSNL BharatNet Phase III",
       description: "Developing a national fiber optic infrastructure management system supporting scalable, multi-region telecom operations.",
       highlights: [
-        "Laravel platform development and application performance optimization",
-        "GIS network visualization and real-time asset tracking",
-        "REST API design for consistent web and mobile synchronization",
+        "Scalable telecom platform development and application performance optimization",
+        "GIS-powered network visualization and real-time asset intelligence",
+        "RESTful API architecture enabling reliable web and mobile data synchronization",
       ],
     },
   ],
 } as const;
 
-export const navigation = ["Home", "About", "Skills", "Projects", "Contact"] as const;
+export const navigation = ["Home", "About", "Skills", "Projects", "Experience", "Contact"] as const;
 
 export type Project = (typeof portfolio.projects)[number];
