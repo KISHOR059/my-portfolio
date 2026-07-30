@@ -50,7 +50,7 @@ export function PortfolioLoader() {
       document.body.style.overflow = "";
       document.documentElement.classList.remove("portfolio-loading");
       setVisible(false);
-    }, reducedMotion ? 160 : compactMotion ? 600 : 700);
+    }, reducedMotion ? 80 : compactMotion ? 140 : 180);
     return () => window.clearTimeout(timeout);
   }, [compactMotion, progressComplete, reducedMotion, visible]);
 
@@ -66,7 +66,7 @@ export function PortfolioLoader() {
           className="fixed inset-0 z-[999] grid min-h-dvh place-items-center overflow-hidden bg-[#050816] px-6 [contain:strict]"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: reducedMotion ? 0.16 : compactMotion ? 0.42 : 0.52, ease: [0.76, 0, 0.24, 1] }}
+          transition={{ duration: reducedMotion ? 0.08 : compactMotion ? 0.24 : 0.3, ease: [0.76, 0, 0.24, 1] }}
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(179,0,179,.25),transparent_28%),radial-gradient(circle_at_50%_55%,rgba(34,211,238,.08),transparent_42%)]" />
           <div className="absolute inset-0 hidden opacity-25 sm:block [background-image:radial-gradient(circle,rgba(148,163,184,.48)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(circle_at_center,black,transparent_72%)]" />
