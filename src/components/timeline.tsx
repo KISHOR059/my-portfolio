@@ -34,14 +34,14 @@ export function Timeline() {
                       <div className="mt-6 grid gap-2 sm:grid-cols-3">
                         {experience.highlights.map((highlight) => <span key={highlight} className="inline-flex items-start gap-2 rounded-xl border border-white/[.06] bg-white/[.025] px-3 py-2.5 text-[10px] leading-5 text-slate-400"><Check className="mt-1 size-3 shrink-0 text-emerald-400" />{highlight}</span>)}
                       </div>
-                    </div>
+                  </div>
                   </div>
                 </motion.article>
               </div>
             </div>
             <motion.div initial={{ opacity: 0, scale: .65 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: .5 }} transition={{ type: "spring", stiffness: 300, damping: 22 }} className="absolute left-0 top-6 grid size-9 place-items-center rounded-full border border-violet-300/30 bg-[#0b0d20] text-violet-300 shadow-[0_0_24px_rgba(124,58,237,.4)]">
               <motion.span initial={{ opacity: .2, scale: .7 }} whileInView={{ opacity: [0, .7, 0], scale: [0.7, 1.45, 1.45] }} viewport={{ once: true }} transition={{ duration: .8, delay: .22, ease: "easeOut" }} className="pointer-events-none absolute inset-0 rounded-full border border-violet-300/45" />
-              <BriefcaseBusiness className="relative size-4" />
+              <motion.span initial={{ opacity: 0, y: 5, rotate: -12, scale: .75 }} whileInView={{ opacity: 1, y: 0, rotate: 0, scale: 1 }} viewport={{ once: true, amount: .5 }} transition={{ delay: .18, type: "spring", stiffness: 320, damping: 16 }}><BriefcaseBusiness className="relative size-4" /></motion.span>
             </motion.div>
           </Reveal>
         ))}
