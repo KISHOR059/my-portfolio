@@ -27,7 +27,7 @@ export function PortfolioLoader() {
     const timeout = window.setTimeout(() => {
       document.body.style.overflow = previousOverflow;
       setVisible(false);
-    }, reducedMotion ? 500 : compactMotion ? 1800 : 2200);
+    }, reducedMotion ? 700 : compactMotion ? 3200 : 4200);
 
     return () => {
       window.clearTimeout(timeout);
@@ -46,7 +46,7 @@ export function PortfolioLoader() {
           className="fixed inset-0 z-[999] grid min-h-dvh place-items-center overflow-hidden bg-[#050816] px-6 [contain:strict]"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: reducedMotion ? 0.12 : compactMotion ? 0.3 : 0.42, ease: [0.76, 0, 0.24, 1] }}
+          transition={{ duration: reducedMotion ? 0.16 : compactMotion ? 0.42 : 0.52, ease: [0.76, 0, 0.24, 1] }}
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(179,0,179,.25),transparent_28%),radial-gradient(circle_at_50%_55%,rgba(34,211,238,.08),transparent_42%)]" />
           <div className="absolute inset-0 hidden opacity-25 sm:block [background-image:radial-gradient(circle,rgba(148,163,184,.48)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(circle_at_center,black,transparent_72%)]" />
@@ -61,7 +61,7 @@ export function PortfolioLoader() {
               <motion.div
                 className="absolute inset-0 transform-gpu rounded-full border border-[#b300b3]/25 will-change-transform"
                 animate={reducedMotion ? undefined : { rotate: 360 }}
-                transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 2.8 : 3.8, repeat: Infinity, ease: "linear" }}
               >
                 <span className="absolute left-1/2 top-[-4px] size-2 -translate-x-1/2 rounded-full bg-[#b300b3] shadow-[0_0_18px_#b300b3]" />
               </motion.div>
@@ -69,7 +69,7 @@ export function PortfolioLoader() {
                 <motion.div
                   className="absolute inset-4 transform-gpu rounded-full border border-dashed border-cyan-300/25 will-change-transform"
                   animate={reducedMotion ? undefined : { rotate: -360 }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 2.8 : 3.8, repeat: Infinity, ease: "linear" }}
                 />
               ) : null}
               <motion.div
@@ -100,7 +100,7 @@ export function PortfolioLoader() {
                   className="h-full origin-left bg-gradient-to-r from-[#b300b3] via-fuchsia-400 to-cyan-300 shadow-[0_0_14px_rgba(34,211,238,.8)]"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ duration: reducedMotion ? 0.35 : compactMotion ? 1.45 : 1.85, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 2.8 : 3.8, ease: [0.22, 1, 0.36, 1] }}
                 />
               </div>
               <div className="mt-3 flex items-center justify-between gap-2 font-mono text-[8px] uppercase tracking-[.16em] text-slate-500 sm:text-[9px]">
