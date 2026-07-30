@@ -8,6 +8,7 @@ const bootSteps = ["Interface", "Experience", "Systems"];
 export function PortfolioLoader() {
   const [visible, setVisible] = useState(true);
   const [compactMotion, setCompactMotion] = useState(false);
+  const [progressComplete, setProgressComplete] = useState(false);
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -24,16 +25,20 @@ export function PortfolioLoader() {
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const timeout = window.setTimeout(() => {
-      document.body.style.overflow = previousOverflow;
-      setVisible(false);
-    }, reducedMotion ? 700 : compactMotion ? 3200 : 4200);
-
     return () => {
-      window.clearTimeout(timeout);
       document.body.style.overflow = previousOverflow;
     };
   }, [compactMotion, reducedMotion]);
+
+  useEffect(() => {
+    if (!progressComplete || !visible) return;
+    const timeout = window.setTimeout(() => {
+      document.body.style.overflow = "";
+      document.documentElement.classList.remove("portfolio-loading");
+      setVisible(false);
+    }, reducedMotion ? 160 : compactMotion ? 600 : 700);
+    return () => window.clearTimeout(timeout);
+  }, [compactMotion, progressComplete, reducedMotion, visible]);
 
   return (
     <AnimatePresence>
@@ -43,6 +48,7 @@ export function PortfolioLoader() {
           role="status"
           aria-live="polite"
           aria-label="Loading Kishor's portfolio"
+          data-portfolio-loader
           className="fixed inset-0 z-[999] grid min-h-dvh place-items-center overflow-hidden bg-[#050816] px-6 [contain:strict]"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -61,7 +67,7 @@ export function PortfolioLoader() {
               <motion.div
                 className="absolute inset-0 transform-gpu rounded-full border border-[#b300b3]/25 will-change-transform"
                 animate={reducedMotion ? undefined : { rotate: 360 }}
-                transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 2.8 : 3.8, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 4.5 : 5.5, repeat: Infinity, ease: "linear" }}
               >
                 <span className="absolute left-1/2 top-[-4px] size-2 -translate-x-1/2 rounded-full bg-[#b300b3] shadow-[0_0_18px_#b300b3]" />
               </motion.div>
@@ -69,7 +75,7 @@ export function PortfolioLoader() {
                 <motion.div
                   className="absolute inset-4 transform-gpu rounded-full border border-dashed border-cyan-300/25 will-change-transform"
                   animate={reducedMotion ? undefined : { rotate: -360 }}
-                  transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 2.8 : 3.8, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 4.5 : 5.5, repeat: Infinity, ease: "linear" }}
                 />
               ) : null}
               <motion.div
@@ -100,7 +106,8 @@ export function PortfolioLoader() {
                   className="h-full origin-left bg-gradient-to-r from-[#b300b3] via-fuchsia-400 to-cyan-300 shadow-[0_0_14px_rgba(34,211,238,.8)]"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 2.8 : 3.8, ease: [0.22, 1, 0.36, 1] }}
+                  onAnimationComplete={() => setProgressComplete(true)}
+                  transition={{ duration: reducedMotion ? 0.45 : compactMotion ? 4.5 : 5.5, ease: "linear" }}
                 />
               </div>
               <div className="mt-3 flex items-center justify-between gap-2 font-mono text-[8px] uppercase tracking-[.16em] text-slate-500 sm:text-[9px]">

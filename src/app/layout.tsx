@@ -19,5 +19,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={spaceGrotesk.variable}><body><PortfolioLoader />{children}</body></html>;
+  return <html lang="en" className={spaceGrotesk.variable + " portfolio-loading"}><body><PortfolioLoader />{children}</body></html>;
 }
