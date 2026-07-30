@@ -4,6 +4,7 @@ import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 import dynamic from "next/dynamic";
 import { HeroDotField } from "@/components/ui/hero-dot-field";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const HeroColorBand = dynamic(
   () => import("@/components/ui/hero-color-band").then((module) => module.HeroColorBand),
@@ -12,9 +13,10 @@ const HeroColorBand = dynamic(
 
 export function ReactBitsHeroBackground() {
   const reducedMotion = useReducedMotion();
+  const constrainedViewport = useMediaQuery("(max-width: 1100px)");
   const backgroundRef = useRef<HTMLDivElement>(null);
   const inView = useInView(backgroundRef, { margin: "120px 0px" });
-  const animateBackground = !reducedMotion && inView;
+  const animateBackground = !reducedMotion && inView && !constrainedViewport;
 
   return (
     <div ref={backgroundRef} className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">

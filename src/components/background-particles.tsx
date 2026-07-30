@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 const stars = Array.from({ length: 56 }, (_, index) => ({
@@ -14,10 +15,12 @@ const stars = Array.from({ length: 56 }, (_, index) => ({
 export function BackgroundParticles() {
   const reducedMotion = useReducedMotion();
   const mobile = useMediaQuery("(max-width: 767px)");
-  const calmMotion = reducedMotion || mobile;
+  const particlesRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(particlesRef, { once: false, margin: "200px" });
+  const calmMotion = Boolean(reducedMotion) || mobile || !inView;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+    <div ref={particlesRef} className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(76,54,180,.24),transparent_40%),radial-gradient(circle_at_85%_45%,rgba(19,88,160,.11),transparent_32%)]" />
       <motion.div className="absolute -left-40 hidden sm:block top-[22%] size-[28rem] rounded-full bg-violet-600/[.055] blur-[120px]" animate={calmMotion ? undefined : { x: [0, 180, 40, 0], y: [0, -60, 80, 0], scale: [1, 1.18, 0.9, 1] }} transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }} />
       <motion.div className="absolute -right-44 hidden sm:block top-[55%] size-[32rem] rounded-full bg-cyan-500/[.045] blur-[130px]" animate={calmMotion ? undefined : { x: [0, -160, -20, 0], y: [0, 80, -50, 0], scale: [1, 0.9, 1.2, 1] }} transition={{ duration: 29, repeat: Infinity, ease: "easeInOut" }} />

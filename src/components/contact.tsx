@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, AtSign, Mail, MapPin, MessageSquareText, Send, UserRound } from "lucide-react";
 import { useState, type FormEvent, type ReactNode } from "react";
+import { useRef } from "react";
 import { GitHubLogo, LinkedInLogo } from "@/components/brand-icons";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -21,6 +22,9 @@ type FormStatus = "idle" | "submitting" | "success" | "error";
 const fieldClass = "peer mt-2 block w-full rounded-2xl border border-white/[.08] bg-[#070918]/75 px-4 py-3.5 text-sm text-white outline-none transition-[border-color,background-color,box-shadow] duration-300 placeholder:text-slate-600 hover:border-white/[.13] focus:border-cyan-300/35 focus:bg-[#090c1d]/90 focus:shadow-[0_0_0_3px_rgba(34,211,238,.055),0_0_24px_rgba(59,130,246,.07)]";
 
 export function Contact() {
+  const contactRef = useRef<HTMLElement>(null);
+  const contactInView = useInView(contactRef, { margin: "120px 0px" });
+  const reducedMotion = useReducedMotion();
   const [status, setStatus] = useState<FormStatus>("idle");
   const [feedback, setFeedback] = useState("");
   const [startedAt, setStartedAt] = useState(() => Date.now());
@@ -65,7 +69,7 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="section-shell scroll-mt-20 pb-24 sm:pb-32">
+    <section ref={contactRef} id="contact" className="section-shell scroll-mt-20 pb-24 sm:pb-32">
       <Reveal>
         <SectionHeading eyebrow="05 / Contact" title="Let’s create something exceptional." description="Have a product idea, an engineering challenge, or an opportunity worth discussing? Open a channel and tell me about it." />
       </Reveal>
@@ -82,7 +86,7 @@ export function Contact() {
               <div className="flex items-center justify-between gap-4">
                 <span className="inline-flex items-center gap-2 rounded-full border border-emerald-300/15 bg-emerald-400/[.055] px-3 py-2 font-mono text-[10px] uppercase tracking-[.08em] text-emerald-300">
                   <span className="relative flex size-2">
-                    <motion.span className="absolute inline-flex size-full rounded-full bg-emerald-400" animate={{ scale: [1, 1.9], opacity: [.65, 0] }} transition={{ duration: 1.8, repeat: Infinity }} />
+                    <motion.span className="absolute inline-flex size-full rounded-full bg-emerald-400" animate={contactInView && !reducedMotion ? { scale: [1, 1.9], opacity: [.65, 0] } : undefined} transition={{ duration: 1.8, repeat: Infinity }} />
                     <span className="relative inline-flex size-2 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399]" />
                   </span>
                   Available to connect
