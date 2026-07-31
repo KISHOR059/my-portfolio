@@ -30,6 +30,7 @@ export function ColorPalette() {
   const [open, setOpen] = useState(false);
   const [hsv, setHsv] = useState(() => hexToHsv(accentColor));
   const pickerRef = useRef<HTMLDivElement>(null);
+  const pointerFrameRef = useRef<number | null>(null);
 
   useEffect(() => setHsv(hexToHsv(accentColor)), [accentColor]);
   useEffect(() => {
@@ -49,7 +50,11 @@ export function ColorPalette() {
     const rect = event.currentTarget.getBoundingClientRect();
     const saturation = Math.max(0, Math.min(100, ((event.clientX - rect.left) / rect.width) * 100));
     const value = Math.max(0, Math.min(100, 100 - ((event.clientY - rect.top) / rect.height) * 100));
-    update({ saturation, value });
+    if (pointerFrameRef.current !== null) cancelAnimationFrame(pointerFrameRef.current);
+    pointerFrameRef.current = requestAnimationFrame(() => {
+      update({ saturation, value });
+      pointerFrameRef.current = null;
+    });
   };
 
   return <div ref={pickerRef} className="relative">
