@@ -7,6 +7,7 @@ import { ProfilePortrait } from "@/components/profile-portrait";
 import { ReactBitsHeroBackground } from "@/components/react-bits-hero-background";
 import { portfolio } from "@/data/portfolio";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useAccentColor } from "@/components/accent-color-provider";
 
 const item = {
   hidden: { opacity: 0, y: 24 },
@@ -19,10 +20,11 @@ export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
   const heroInView = useInView(heroRef, { margin: "120px 0px" });
   const calmMotion = mobile || reducedMotion || !heroInView;
+  const { accentColor } = useAccentColor();
 
   return (
     <section ref={heroRef} id="home" className="relative flex min-h-screen scroll-mt-20 items-center overflow-hidden px-4 pb-18 pt-28 sm:px-6 lg:pt-32">
-      <ReactBitsHeroBackground />
+      <ReactBitsHeroBackground accentColor={accentColor} />
       <div className="relative z-10 mx-auto grid w-full max-w-[82.75rem] items-start gap-12 lg:grid-cols-2 lg:gap-5 xl:gap-8">
         <motion.div initial="hidden" animate="visible" transition={{ delayChildren: .08, staggerChildren: .1 }} className="flex max-w-2xl flex-col items-center gap-5 text-center lg:items-start lg:pt-5 lg:text-left">
           <motion.div variants={item} transition={{ duration: .7, ease: [0.16, 1, 0.3, 1] }} className="inline-flex items-center gap-2 rounded-xl border border-white/[.09] bg-[#120f17]/55 p-1 pr-3 font-mono text-[10px] uppercase text-slate-300 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] backdrop-blur-2xl sm:text-xs">

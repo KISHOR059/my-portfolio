@@ -38,6 +38,13 @@ export const HeroDotField = memo(function HeroDotField({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const glowRef = useRef<SVGCircleElement>(null);
   const gradientId = useId().replace(/:/g, "");
+  const gradientFromRef = useRef(gradientFrom);
+  const gradientToRef = useRef(gradientTo);
+
+  useEffect(() => {
+    gradientFromRef.current = gradientFrom;
+    gradientToRef.current = gradientTo;
+  }, [gradientFrom, gradientTo]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -61,6 +68,8 @@ export const HeroDotField = memo(function HeroDotField({
     let lastTime = performance.now();
     let lastRenderedAt = 0;
     let fillStyle: CanvasGradient | string = gradientFrom;
+    let previousGradientFrom = gradientFrom;
+    let previousGradientTo = gradientTo;
 
     const buildDots = () => {
       dots.length = 0;
@@ -88,8 +97,8 @@ export const HeroDotField = memo(function HeroDotField({
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       buildDots();
       const gradient = context.createLinearGradient(0, 0, size.width, size.height);
-      gradient.addColorStop(0, gradientFrom);
-      gradient.addColorStop(1, gradientTo);
+      gradient.addColorStop(0, gradientFromRef.current);
+      gradient.addColorStop(1, gradientToRef.current);
       fillStyle = gradient;
     };
     const onPointerMove = (event: PointerEvent) => {
@@ -132,6 +141,14 @@ export const HeroDotField = memo(function HeroDotField({
         glowRef.current.style.opacity = String(glowOpacity);
       }
 
+      if (previousGradientFrom !== gradientFromRef.current || previousGradientTo !== gradientToRef.current) {
+        const gradient = context.createLinearGradient(0, 0, size.width, size.height);
+        gradient.addColorStop(0, gradientFromRef.current);
+        gradient.addColorStop(1, gradientToRef.current);
+        fillStyle = gradient;
+        previousGradientFrom = gradientFromRef.current;
+        previousGradientTo = gradientToRef.current;
+      }
       context.clearRect(0, 0, size.width, size.height);
       context.fillStyle = fillStyle;
       context.beginPath();
@@ -213,7 +230,7 @@ export const HeroDotField = memo(function HeroDotField({
       window.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, [bulgeOnly, bulgeStrength, cursorForce, cursorRadius, dotRadius, dotSpacing, gradientFrom, gradientTo, sparkle, waveAmplitude]);
+  }, [bulgeOnly, bulgeStrength, cursorForce, cursorRadius, dotRadius, dotSpacing, sparkle, waveAmplitude]);
 
   return (
     <div className={`pointer-events-none absolute inset-0 size-full ${className}`} aria-hidden="true">

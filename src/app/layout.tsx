@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import { PortfolioLoader } from "@/components/portfolio-loader";
+import { AccentColorProvider } from "@/components/accent-color-provider";
 import "./globals.css";
 import "./brightness.css";
 import "./mobile-performance.css";
@@ -19,5 +20,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={spaceGrotesk.variable + " portfolio-loading"}><body><PortfolioLoader />{children}</body></html>;
+  return <html lang="en" className={spaceGrotesk.variable + " portfolio-loading"}><body><PortfolioLoader /><AccentColorProvider>{children}</AccentColorProvider></body></html>;
 }

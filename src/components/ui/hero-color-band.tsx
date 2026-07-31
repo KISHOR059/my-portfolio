@@ -111,6 +111,11 @@ export function HeroColorBand({
   intensity = 1.25,
 }: HeroColorBandProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const colorUniformRef = useRef<{ value: Vec3 } | null>(null);
+
+  useEffect(() => {
+    if (colorUniformRef.current) colorUniformRef.current.value = hexToRgb(color);
+  }, [color]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -149,6 +154,7 @@ export function HeroColorBand({
       uIterations: { value: iterations },
       uIntensity: { value: intensity },
     };
+    colorUniformRef.current = uniforms.uColor;
     const program = new Program(gl, { vertex, fragment, uniforms, transparent: true, depthTest: false, depthWrite: false });
     const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
     const pointerTarget: Vec2 = [0, 0];
@@ -238,7 +244,7 @@ export function HeroColorBand({
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       gl.canvas.remove();
     };
-  }, [bandWidth, color, fadeTop, frequency, intensity, iterations, mouseInfluence, noise, rotation, scale, speed, warpStrength, yOffset]);
+  }, [bandWidth, fadeTop, frequency, intensity, iterations, mouseInfluence, noise, rotation, scale, speed, warpStrength, yOffset]);
 
   return <div ref={containerRef} className={className} aria-hidden="true" />;
 }
