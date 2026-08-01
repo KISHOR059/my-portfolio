@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Kishor.dev - Developer Portfolio
 
-## Getting Started
+Personal portfolio website for Kishor, a Software Engineer focused on scalable systems, full-stack products, and polished digital experiences.
 
-First, run the development server:
+## 👋 About Kishor
 
-```bash
+Kishor builds reliable applications, backend systems, REST APIs, GIS-powered network visualizations, and cloud-ready development workflows.
+
+🎯 Current focus:
+
+- Scalable application development and performance optimization
+- GIS infrastructure visualization and real-time asset intelligence
+- REST API design for web and mobile synchronization
+- Full-stack product development
+- Cloud, Docker, CI/CD, and modern developer tooling
+
+## ✨ Featured Projects
+
+- **BSNL BharatNet Phase III:** National fiber optic infrastructure management system for scalable, multi-region telecom operations.
+- **Cloud-Based File Storage:** Secure AWS S3 file management platform with authentication, REST APIs, Docker, and GitHub Actions.
+- **EV Charging Station Locator:** Full-stack charging station discovery and reservation platform with conflict prevention.
+
+## 🧰 Technology Stack
+
+Next.js 16, React 19, TypeScript, Tailwind CSS v4, Framer Motion, Lucide React, OGL/WebGL, Laravel, Java, Python, Node.js, REST APIs, MySQL, PostgreSQL, MongoDB, Redis, AWS, Docker, GitHub Actions, and Linux.
+
+Portfolio content is centralized in `src/data/portfolio.ts`.
+
+## 💻 Run Locally
+
+Requirements: Node.js 20+ and npm.
+
+~~~bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+~~~
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✉️ Contact Form
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The contact form uses the `/api/contact` route. Configure these Vercel environment variables for email delivery:
 
-## Learn More
+~~~env
+RESEND_API_KEY=your_resend_api_key
+CONTACT_EMAIL=your_destination_email
+~~~
 
-To learn more about Next.js, take a look at the following resources:
+## ✅ Validation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+~~~bash
+npm run lint
+npm run build
+~~~
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ☁️ Deployment
 
-## Deploy on Vercel
+Import the project into Vercel, add the contact environment variables, and deploy with the default Next.js settings.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔗 Links
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- GitHub: [KISHOR059](https://github.com/KISHOR059)
+- LinkedIn: [Kishor M](https://linkedin.com/in/kishor-m-567b95297)
