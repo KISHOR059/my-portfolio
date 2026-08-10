@@ -9,6 +9,7 @@ import { Projects } from "@/components/projects";
 import { Reveal } from "@/components/reveal";
 import { Skills } from "@/components/skills";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import SplashCursor from "@/components/splash-cursor";
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
         <Timeline />
         <Contact />
       </main>
+      <SplashCursor RAINBOW_MODE={false} COLOR="#a855f7" />
       <Reveal><Footer /></Reveal>
     </>
   );
