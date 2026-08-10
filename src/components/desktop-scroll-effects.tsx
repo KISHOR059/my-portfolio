@@ -19,12 +19,12 @@ function ActiveDesktopEffects() {
         />
       </div>
       <motion.span
-        className="absolute -left-1 size-2 rounded-full bg-violet-300 shadow-[0_0_18px_4px_rgba(124,58,237,.38)]"
-        style={{ top: leftOrbY, opacity: orbOpacity }}
+        className="absolute -left-1 top-0 size-2 rounded-full bg-violet-300 shadow-[0_0_18px_4px_rgba(124,58,237,.38)] will-change-transform"
+        style={{ y: leftOrbY, opacity: orbOpacity }}
       />
       <motion.span
-        className="absolute -right-1 size-2 rounded-full bg-cyan-200 shadow-[0_0_18px_4px_rgba(34,211,238,.35)]"
-        style={{ top: rightOrbY, opacity: orbOpacity }}
+        className="absolute -right-1 top-0 size-2 rounded-full bg-cyan-200 shadow-[0_0_18px_4px_rgba(34,211,238,.35)] will-change-transform"
+        style={{ y: rightOrbY, opacity: orbOpacity }}
       />
     </div>
   );

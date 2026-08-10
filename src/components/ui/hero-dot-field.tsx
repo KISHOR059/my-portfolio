@@ -73,7 +73,7 @@ export const HeroDotField = memo(function HeroDotField({
 
     const buildDots = () => {
       dots.length = 0;
-      const step = dotRadius + dotSpacing;
+      const step = dotRadius + (lowPower ? dotSpacing + 3 : dotSpacing);
       const columns = Math.floor(size.width / step);
       const rows = Math.floor(size.height / step);
       const paddingX = (size.width % step) / 2;

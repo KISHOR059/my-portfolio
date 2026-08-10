@@ -19,11 +19,17 @@ export function PortfolioLoader() {
     const media = window.matchMedia("(max-width: 767px), (pointer: coarse)");
     const updateMotionBudget = () => {
       const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? 8;
-      setCompactMotion(media.matches || (navigator.hardwareConcurrency ?? 8) <= 4 || memory <= 4);
+      const low = media.matches || (navigator.hardwareConcurrency ?? 8) <= 4 || memory <= 4;
+      setCompactMotion(low);
+      if (low) document.documentElement.dataset.motionBudget = "low";
+      else delete document.documentElement.dataset.motionBudget;
     };
     updateMotionBudget();
     media.addEventListener("change", updateMotionBudget);
-    return () => media.removeEventListener("change", updateMotionBudget);
+    return () => {
+      media.removeEventListener("change", updateMotionBudget);
+      delete document.documentElement.dataset.motionBudget;
+    };
   }, []);
 
   useEffect(() => {
