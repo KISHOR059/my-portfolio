@@ -70,6 +70,75 @@ function SplashCanvas({
       config.SHADING = false;
     }
 
+    // --- Performance optimization: device-tier config + adaptive quality ---
+    function getGpuTier() {
+      let renderer = "";
+      try {
+        renderer = String(gl.getParameter(gl.RENDERER) || "");
+      } catch {
+        /* ignore */
+      }
+      const coarse = window.matchMedia("(pointer: coarse)").matches;
+      const cores = navigator.hardwareConcurrency || 4;
+      const mem = navigator.deviceMemory || 4;
+      const weakGpu = /swiftshader|llvmpipe|software|mali|adreno|powervr|intel\s+hd/i.test(renderer);
+      if (coarse) return "low";
+      if (weakGpu || cores <= 4 || mem <= 4) return "medium";
+      return "high";
+    }
+
+    const QUALITY_LEVELS = [256, 384, 512, 640, 768, 1024];
+    const TIER_MAX_LEVEL = { high: 5, medium: 3, low: 2 };
+    const TIER_LIMITS = {
+      high: { simRes: 128, dyeRes: 1024, pressure: 20, pixelRatio: 2, maxDt: 1 / 60 },
+      medium: { simRes: 96, dyeRes: 640, pressure: 12, pixelRatio: 1.5, maxDt: 1 / 45 },
+      low: { simRes: 64, dyeRes: 384, pressure: 8, pixelRatio: 1, maxDt: 1 / 30 },
+    };
+
+    const tier = getGpuTier();
+    const tierLimits = TIER_LIMITS[tier];
+    config.SIM_RESOLUTION = Math.min(config.SIM_RESOLUTION, tierLimits.simRes);
+    config.DYE_RESOLUTION = Math.min(config.DYE_RESOLUTION, tierLimits.dyeRes);
+    config.PRESSURE_ITERATIONS = Math.min(config.PRESSURE_ITERATIONS, tierLimits.pressure);
+    config.MAX_PIXEL_RATIO = tierLimits.pixelRatio;
+    config.MAX_DT = tierLimits.maxDt;
+    config.TIER = tier;
+
+    let qualityLevel = QUALITY_LEVELS.findIndex((v) => v >= config.DYE_RESOLUTION);
+    if (qualityLevel === -1) qualityLevel = 0;
+
+    function applyQuality(level) {
+      if (level === qualityLevel) return;
+      const nextDye = Math.min(QUALITY_LEVELS[level], DYE_RESOLUTION);
+      if (nextDye === config.DYE_RESOLUTION) return;
+      qualityLevel = level;
+      config.DYE_RESOLUTION = nextDye;
+      config.SIM_RESOLUTION = Math.min(Math.max(32, Math.round(nextDye * 0.09)), SIM_RESOLUTION);
+      initFramebuffers();
+    }
+
+    let frameTimeEma = 16.7;
+    let frameCountSinceAdjust = 0;
+    let cooldownFrames = 0;
+    const ADJUST_WINDOW = 45;
+
+    function adaptQuality(deltaMs) {
+      frameTimeEma = frameTimeEma * 0.9 + deltaMs * 0.1;
+      if (++frameCountSinceAdjust < ADJUST_WINDOW) return;
+      frameCountSinceAdjust = 0;
+      if (cooldownFrames > 0) {
+        cooldownFrames--;
+        return;
+      }
+      if (frameTimeEma > 26 && qualityLevel > 0) {
+        cooldownFrames = ADJUST_WINDOW;
+        applyQuality(qualityLevel - 1);
+      } else if (frameTimeEma < 13 && qualityLevel < TIER_MAX_LEVEL[tier]) {
+        cooldownFrames = ADJUST_WINDOW;
+        applyQuality(qualityLevel + 1);
+      }
+    }
+
     function getWebGLContext(canvas) {
       const params = {
         alpha: true,
@@ -77,6 +146,7 @@ function SplashCanvas({
         stencil: false,
         antialias: false,
         preserveDrawingBuffer: false,
+        powerPreference: "high-performance",
       };
       let gl = canvas.getContext("webgl2", params);
       const isWebGL2 = !!gl;
@@ -677,22 +747,42 @@ function SplashCanvas({
     initFramebuffers();
     let lastUpdateTime = Date.now();
     let colorUpdateTimer = 0.0;
+    let lastFrameTime = performance.now();
+    let frameIndex = 0;
 
-    function updateFrame() {
+    function updateFrame(now) {
       if (!isActive) return;
+      animationFrameId.current = requestAnimationFrame(updateFrame);
+
+      const time = now || performance.now();
+      if (document.hidden) {
+        lastFrameTime = time;
+        frameIndex++;
+        return;
+      }
+
+      const deltaMs = time - lastFrameTime;
+      lastFrameTime = time;
+      frameIndex++;
+
+      adaptQuality(deltaMs);
+
+      if (tier === "low" && qualityLevel === 0 && frameIndex % 2 === 0) {
+        return;
+      }
+
       const dt = calcDeltaTime();
       if (resizeCanvas()) initFramebuffers();
       updateColors(dt);
       applyInputs();
       step(dt);
       render(null);
-      animationFrameId.current = requestAnimationFrame(updateFrame);
     }
 
     function calcDeltaTime() {
       let now = Date.now();
       let dt = (now - lastUpdateTime) / 1000;
-      dt = Math.min(dt, 0.016666);
+      dt = Math.min(dt, config.MAX_DT);
       lastUpdateTime = now;
       return dt;
     }
@@ -964,7 +1054,7 @@ function SplashCanvas({
     }
 
     function scaleByPixelRatio(input) {
-      const pixelRatio = window.devicePixelRatio || 1;
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, config.MAX_PIXEL_RATIO);
       return Math.floor(input * pixelRatio);
     }
 
@@ -1036,7 +1126,8 @@ function SplashCanvas({
     window.addEventListener("touchmove", handleTouchMove, false);
     window.addEventListener("touchend", handleTouchEnd);
 
-    updateFrame();
+    lastFrameTime = performance.now();
+    animationFrameId.current = requestAnimationFrame(updateFrame);
 
     // Cleanup function
     return () => {
@@ -1068,6 +1159,7 @@ function SplashCanvas({
         pointerEvents: "none",
         width: "100%",
         height: "100%",
+        willChange: "transform",
       }}
       aria-hidden="true"
     >
@@ -1088,20 +1180,19 @@ export default function SplashCursor(props) {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const finePointer = window.matchMedia("(pointer: fine)").matches;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!finePointer || reducedMotion) return;
+    if (reducedMotion) return;
 
-    const about = document.getElementById("about");
+    const aboutTitle = document.getElementById("about-title");
 
     let rafId = 0;
     const check = () => {
       rafId = 0;
-      if (!about) {
+      if (!aboutTitle) {
         setEnabled(true);
         return;
       }
-      setEnabled(about.getBoundingClientRect().top < window.innerHeight);
+      setEnabled(aboutTitle.getBoundingClientRect().bottom < 0);
     };
     const onScroll = () => {
       if (!rafId) rafId = requestAnimationFrame(check);

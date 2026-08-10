@@ -26,7 +26,7 @@ export default function Home() {
         <Timeline />
         <Contact />
       </main>
-      <SplashCursor RAINBOW_MODE={false} COLOR="#a855f7" />
+      <SplashCursor RAINBOW_MODE={false} COLOR="#a855f7" SPLAT_RADIUS={0.1} />
       <Reveal><Footer /></Reveal>
     </>
   );
