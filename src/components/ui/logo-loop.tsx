@@ -17,7 +17,6 @@ type LogoLoopProps = {
   hoverSpeed?: number;
   fadeOut?: boolean;
   fadeOutColor?: string;
-  scaleOnHover?: boolean;
   ariaLabel?: string;
   className?: string;
 };
@@ -53,7 +52,6 @@ export const LogoLoop = memo(function LogoLoop({
   hoverSpeed,
   fadeOut = true,
   fadeOutColor = "#050816",
-  scaleOnHover = true,
   ariaLabel = "Technology logos",
   className = "",
 }: LogoLoopProps) {
@@ -164,14 +162,14 @@ export const LogoLoop = memo(function LogoLoop({
     return (
       <li
         key={key}
-        className={`group/logo flex shrink-0 items-center justify-center text-slate-400 transition-[color,transform,filter] duration-300 hover:text-white ${scaleOnHover ? "hover:scale-110" : ""}`}
+        className="group/logo flex shrink-0 items-center justify-center text-slate-400 transition-colors duration-300 hover:text-white"
         style={{ height: logoHeight }}
         title={item.title}
       >
         {inner}
       </li>
     );
-  }, [logoHeight, scaleOnHover]);
+  }, [logoHeight]);
 
   const copies = useMemo(() => Array.from({ length: copyCount }, (_, copyIndex) => (
     <ul
