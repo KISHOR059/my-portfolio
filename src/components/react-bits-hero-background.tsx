@@ -13,7 +13,7 @@ const HeroColorBand = dynamic(
 
 function hexToRgb(hex: string) { const value = hex.replace("#", ""); const parsed = Number.parseInt(value, 16); return [parsed >> 16 & 255, parsed >> 8 & 255, parsed & 255].join(", "); }
 
-export function ReactBitsHeroBackground({ accentColor = "#B300B3" }: { accentColor?: string }) {
+export function ReactBitsHeroBackground({ accentColor = "#A855F7" }: { accentColor?: string }) {
   const reducedMotion = useReducedMotion();
   const constrainedViewport = useMediaQuery("(max-width: 1100px)");
   const backgroundRef = useRef<HTMLDivElement>(null);
@@ -71,7 +71,7 @@ export function ReactBitsHeroBackground({ accentColor = "#B300B3" }: { accentCol
         className="absolute -left-[16%] top-[-12%] hidden size-[62vw] rounded-full bg-[radial-gradient(circle,rgba(var(--hero-accent-rgb),.58)_0%,rgba(var(--hero-accent-rgb),.3)_34%,rgba(var(--hero-accent-rgb),.1)_56%,transparent_72%)] blur-[72px] mix-blend-screen md:block"
         initial={reducedMotion ? false : { opacity: 0 }}
         animate={animateBackground ? {
-          opacity: 1,
+          opacity: .85,
           x: ["0vw", "54vw", "30vw", "7vw", "0vw"],
           y: ["0vh", "42vh", "12vh", "54vh", "0vh"],
           scale: [.9, 1.12, .98, 1.08, .9],
@@ -83,7 +83,7 @@ export function ReactBitsHeroBackground({ accentColor = "#B300B3" }: { accentCol
         className="absolute -right-[10%] bottom-[-18%] hidden size-[46vw] rounded-full bg-[radial-gradient(circle,rgba(var(--hero-accent-rgb),.52)_0%,rgba(var(--hero-accent-rgb),.24)_38%,rgba(var(--hero-accent-rgb),.08)_58%,transparent_74%)] blur-[64px] mix-blend-screen md:block"
         initial={reducedMotion ? false : { opacity: 0 }}
         animate={animateBackground ? {
-          opacity: 1,
+          opacity: .85,
           x: ["0vw", "-42vw", "-18vw", "-55vw", "0vw"],
           y: ["0vh", "-48vh", "-12vh", "-30vh", "0vh"],
           scale: [.94, 1.08, 1.16, 1, .94],
@@ -95,7 +95,7 @@ export function ReactBitsHeroBackground({ accentColor = "#B300B3" }: { accentCol
         className="absolute left-[32%] top-[-20%] hidden size-[38vw] rounded-full bg-[radial-gradient(circle,rgba(var(--hero-accent-rgb),.5)_0%,rgba(var(--hero-accent-rgb),.22)_36%,rgba(var(--hero-accent-rgb),.08)_60%,transparent_75%)] blur-[58px] mix-blend-screen md:block"
         initial={reducedMotion ? false : { opacity: 0 }}
         animate={animateBackground ? {
-          opacity: 1,
+          opacity: .85,
           x: ["0vw", "30vw", "8vw", "-34vw", "0vw"],
           y: ["0vh", "32vh", "58vh", "22vh", "0vh"],
           scale: [.88, 1.14, 1, 1.1, .88],
@@ -107,7 +107,7 @@ export function ReactBitsHeroBackground({ accentColor = "#B300B3" }: { accentCol
         className="absolute right-[-18%] top-[-24%] hidden size-[50vw] rounded-full bg-[radial-gradient(circle,rgba(var(--hero-accent-rgb),.56)_0%,rgba(var(--hero-accent-rgb),.28)_35%,rgba(var(--hero-accent-rgb),.09)_58%,transparent_74%)] blur-[66px] mix-blend-screen md:block"
         initial={reducedMotion ? false : { opacity: 0 }}
         animate={animateBackground ? {
-          opacity: 1,
+          opacity: .85,
           x: ["0vw", "-18vw", "-46vw", "-12vw", "0vw"],
           y: ["0vh", "18vh", "52vh", "35vh", "0vh"],
           scale: [.92, 1.1, 1.02, 1.14, .92],
@@ -118,7 +118,7 @@ export function ReactBitsHeroBackground({ accentColor = "#B300B3" }: { accentCol
       <motion.div
         className="absolute left-[24%] top-[14%] z-[1] hidden size-[52vw] md:block"
         initial={reducedMotion ? false : { opacity: 0, scale: .55 }}
-        animate={{ opacity: .88, scale: 1 }}
+        animate={{ opacity: .78, scale: 1 }}
         transition={{ duration: .7, ease: [0.16, 1, 0.3, 1] }}
       >
         <motion.div
@@ -133,7 +133,7 @@ export function ReactBitsHeroBackground({ accentColor = "#B300B3" }: { accentCol
       </motion.div>
 
       <div className="absolute inset-0 opacity-20 md:hidden [background-image:radial-gradient(circle,rgba(203,213,225,.35)_1px,transparent_1.2px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]" />
-      <div className="absolute left-[-28%] top-[4%] h-[62%] w-[156%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(var(--hero-accent-rgb),.26),rgba(var(--hero-accent-rgb),.1)_38%,transparent_70%)] blur-[48px] mix-blend-screen md:hidden" />
+      <div className="absolute left-[-28%] top-[4%] h-[62%] w-[156%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(var(--hero-accent-rgb),.22),rgba(var(--hero-accent-rgb),.08)_38%,transparent_70%)] blur-[48px] mix-blend-screen md:hidden" />
 
       <div className="absolute inset-0 z-[2] bg-[linear-gradient(to_bottom,transparent_0%,transparent_48%,rgba(5,8,22,.03)_58%,rgba(5,8,22,.12)_68%,rgba(5,8,22,.32)_78%,rgba(5,8,22,.68)_88%,#050816_100%)]" />
       <div className="absolute inset-x-0 top-0 z-[2] h-28 bg-gradient-to-b from-[#050816]/75 via-[#050816]/20 to-transparent" />

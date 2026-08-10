@@ -6,7 +6,7 @@ type AccentContextValue = { accentColor: string; setAccentColor: (color: string)
 const AccentContext = createContext<AccentContextValue | null>(null);
 
 export function AccentColorProvider({ children }: { children: ReactNode }) {
-  const [accentColor, setAccentColor] = useState("#B300B3");
+  const [accentColor, setAccentColor] = useState("#A855F7");
   return <AccentContext.Provider value={{ accentColor, setAccentColor }}>{children}</AccentContext.Provider>;
 }
 
