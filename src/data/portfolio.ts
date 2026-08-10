@@ -34,18 +34,18 @@ export const portfolio = {
   ],
   projects: [
     {
-      title: "Cloud-Based File Storage",
-      description: "A secure, scalable cloud file management platform with role-based access control and production-ready deployment workflows.",
+      title: "AetherMind — AI-Powered Productivity Platform",
+      description: "A full-stack AI productivity platform with AI-driven planning, smart rescheduling, productivity analytics, and a contextual AI assistant powered by local Ollama LLMs.",
       highlights: [
-        "Integrated AWS S3 for secure file storage, uploads, downloads, and access management.",
-        "Containerized the application with Docker and automated delivery through GitHub Actions.",
-        "Built authenticated REST APIs with validation and optimized backend processing.",
+        "Built AI-powered daily planning, task breakdown, prioritization, smart rescheduling, and weekly reviews using locally hosted Ollama LLMs.",
+        "Developed drag-and-drop task and calendar workflows with optimistic updates and React Query-based state synchronization.",
+        "Implemented secure JWT authentication with HttpOnly refresh-token cookies, session rotation, and ownership-scoped REST APIs.",
       ],
-      tech: ["Laravel", "Docker", "AWS S3", "REST APIs"],
-      github: "https://github.com/KISHOR059/Cloud-Based-File-Storage-Web-Application.git",
-      visual: "analytics",
+      tech: ["React", "TypeScript", "Node.js", "MongoDB", "Ollama"],
+      github: "https://github.com/KISHOR059/aethermind-ai",
+      visual: "aiProductivity",
       accent: "violet",
-      year: "2025",
+      year: "2026",
       private: false,
     },
     {

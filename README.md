@@ -17,7 +17,7 @@ Kishor builds reliable applications, backend systems, REST APIs, GIS-powered net
 ## ✨ Featured Projects
 
 - **BSNL BharatNet Phase III:** National fiber optic infrastructure management system for scalable, multi-region telecom operations.
-- **Cloud-Based File Storage:** Secure AWS S3 file management platform with authentication, REST APIs, Docker, and GitHub Actions.
+- **AetherMind:** AI-powered productivity platform with AI-driven daily planning, task management, and a contextual AI assistant powered by locally hosted Ollama LLMs.
 - **EV Charging Station Locator:** Full-stack charging station discovery and reservation platform with conflict prevention.
 
 ## 🧰 Technology Stack
