@@ -1,0 +1,68 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Check, Paintbrush } from "lucide-react";
+import { useHeroTheme, type HeroTheme } from "@/components/hero-theme-provider";
+import { cn } from "@/lib/utils";
+
+const options: { value: HeroTheme; label: string; description: string }[] = [
+  { value: "reactbits", label: "Aurora", description: "Classic gradient background" },
+  { value: "pillar", label: "Monolith", description: "Light pillar with dot field" },
+];
+
+export function ThemeSwitcher() {
+  const { theme, setTheme } = useHeroTheme();
+  const [open, setOpen] = useState(false);
+  const pickerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const close = (event: MouseEvent) => event.target instanceof Node && !pickerRef.current?.contains(event.target) && setOpen(false);
+    document.addEventListener("pointerdown", close);
+    return () => document.removeEventListener("pointerdown", close);
+  }, [open]);
+
+  return (
+    <div ref={pickerRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        className="group grid size-9 place-items-center rounded-[10px] border border-white/[.08] bg-[#120f17]/50 text-slate-400 shadow-[0_2px_16px_rgba(0,0,0,.18)] backdrop-blur-2xl transition-[border-color,background-color,color,transform] duration-300 hover:-translate-y-0.5 hover:border-violet-300/35 hover:bg-violet-500/10 hover:text-violet-200"
+        aria-label="Choose hero background theme"
+        aria-expanded={open}
+      >
+        <Paintbrush className="size-[17px] transition-transform duration-300 group-hover:rotate-12" />
+      </button>
+      {open && (
+        <div className="absolute right-[-8px] top-[calc(100%+10px)] z-50 w-52 rounded-2xl border border-white/[.12] bg-[#191722] p-2.5 shadow-[0_22px_60px_rgba(0,0,0,.55),0_0_30px_rgba(179,0,179,.18)]">
+          <div className="mb-2 flex items-center justify-between"><span className="font-mono text-[9px] uppercase tracking-[.16em] text-slate-300">theme=</span><span className="font-mono text-[9px] text-slate-500">&quot;{theme}&quot;</span></div>
+          <div className="flex flex-col gap-1">
+            {options.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => {
+                  setTheme(option.value);
+                  setOpen(false);
+                }}
+                className={cn(
+                  "flex items-center justify-between gap-2 rounded-xl border px-3 py-2 text-left transition-colors",
+                  theme === option.value
+                    ? "border-violet-300/30 bg-violet-500/15 text-white"
+                    : "border-transparent text-slate-300 hover:bg-white/[.06] hover:text-white",
+                )}
+                aria-pressed={theme === option.value}
+              >
+                <span className="min-w-0">
+                  <span className="block text-xs font-medium">{option.label}</span>
+                  <span className="block truncate text-[10px] text-slate-500">{option.description}</span>
+                </span>
+                {theme === option.value && <Check className="size-3.5 shrink-0 text-violet-300" />}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

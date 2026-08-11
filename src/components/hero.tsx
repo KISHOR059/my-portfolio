@@ -2,12 +2,36 @@
 
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
+import dynamic from "next/dynamic";
 import { ArrowRight, Download, Radio, Sparkles } from "lucide-react";
 import { ProfilePortrait } from "@/components/profile-portrait";
 import { ReactBitsHeroBackground } from "@/components/react-bits-hero-background";
 import { portfolio } from "@/data/portfolio";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useAccentColor } from "@/components/accent-color-provider";
+import { useHeroTheme } from "@/components/hero-theme-provider";
+
+const LightPillar = dynamic(() => import("@/components/light-pillar"), { ssr: false });
+const DotField = dynamic(() => import("@/components/dot-field"), { ssr: false });
+
+function hexToRgb(hex: string) {
+  const value = hex.replace("#", "");
+  const parsed = Number.parseInt(value, 16);
+  return `${(parsed >> 16) & 255}, ${(parsed >> 8) & 255}, ${parsed & 255}`;
+}
+
+function mixHex(hex: string, target: string, amount: number) {
+  const a = hex.replace("#", "");
+  const b = target.replace("#", "");
+  const mix = (i: number) => {
+    const from = Number.parseInt(a.slice(i, i + 2), 16);
+    const to = Number.parseInt(b.slice(i, i + 2), 16);
+    return Math.round(from + (to - from) * amount)
+      .toString(16)
+      .padStart(2, "0");
+  };
+  return `#${mix(0)}${mix(2)}${mix(4)}`;
+}
 
 const item = {
   hidden: { opacity: 0, y: 24 },
@@ -21,10 +45,42 @@ export function Hero() {
   const heroInView = useInView(heroRef, { margin: "120px 0px" });
   const calmMotion = mobile || reducedMotion || !heroInView;
   const { accentColor } = useAccentColor();
+  const { theme } = useHeroTheme();
 
   return (
     <section ref={heroRef} id="home" className="relative flex min-h-screen scroll-mt-20 items-center overflow-hidden px-4 pb-18 pt-28 sm:px-6 lg:pt-32">
-      <ReactBitsHeroBackground accentColor={accentColor} />
+      {theme === "reactbits" && <ReactBitsHeroBackground accentColor={accentColor} />}
+      {theme === "pillar" && (
+        <>
+          <LightPillar
+            className="pointer-events-none"
+            topColor={accentColor}
+            bottomColor={mixHex(accentColor, "#ffffff", 0.45)}
+            intensity={1.0}
+            rotationSpeed={0.3}
+            glowAmount={0.005}
+            pillarWidth={3.0}
+            pillarHeight={0.4}
+            noiseIntensity={0.5}
+            pillarRotation={45}
+            interactive={false}
+            mixBlendMode="screen"
+          />
+          <DotField
+            className="pointer-events-none absolute inset-0 hidden md:block"
+            dotRadius={1.5}
+            dotSpacing={14}
+            cursorRadius={500}
+            cursorForce={0.1}
+            bulgeOnly
+            bulgeStrength={67}
+            sparkle={false}
+            waveAmplitude={0}
+            gradientFrom={`rgba(${hexToRgb(accentColor)}, 0.62)`}
+            gradientTo={`rgba(${hexToRgb(accentColor)}, 0.46)`}
+          />
+        </>
+      )}
       <div className="relative z-10 mx-auto grid w-full max-w-[82.75rem] items-start gap-12 lg:grid-cols-2 lg:gap-5 xl:gap-8">
         <motion.div initial="hidden" animate="visible" transition={{ delayChildren: .08, staggerChildren: .1 }} className="flex max-w-2xl flex-col items-center gap-5 text-center lg:items-start lg:pt-5 lg:text-left">
           <motion.div variants={item} transition={{ duration: .7, ease: [0.16, 1, 0.3, 1] }} className="inline-flex items-center gap-2 rounded-xl border border-white/[.09] bg-[#120f17]/55 p-1 pr-3 font-mono text-[10px] uppercase text-slate-300 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] backdrop-blur-2xl sm:text-xs">

@@ -7,6 +7,7 @@ import { GitHubLogo, LinkedInLogo } from "@/components/brand-icons";
 import { navigation, portfolio } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 import { ColorPalette } from "@/components/color-palette";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export function Navbar() {
   const [active, setActive] = useState("Home");
@@ -92,10 +93,11 @@ export function Navbar() {
             <a href={portfolio.social.linkedin} target="_blank" rel="noreferrer" className="group grid size-9 place-items-center rounded-[10px] border border-white/[.08] bg-[#120f17]/50 text-slate-400 shadow-[0_2px_16px_rgba(0,0,0,.18)] backdrop-blur-2xl transition-colors hover:border-blue-400/30 hover:bg-blue-500/10 hover:text-blue-400" aria-label="LinkedIn">
               <LinkedInLogo className="size-[17px] transition-transform group-hover:scale-110" />
             </a>
+          <ThemeSwitcher />
           <ColorPalette />
           </div>
 
-          <span className="ml-auto mr-2 lg:hidden"><ColorPalette /></span>
+          <span className="ml-auto mr-2 lg:hidden"><ThemeSwitcher /><ColorPalette /></span>
           <button
             className="flex size-9 flex-col items-center justify-center gap-1 rounded-[10px] border border-white/[.08] bg-[#120f17]/50 p-2.5 text-white shadow-[0_2px_16px_rgba(0,0,0,.18)] backdrop-blur-2xl lg:hidden"
             onClick={() => setOpen((value) => !value)}
