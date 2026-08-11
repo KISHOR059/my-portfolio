@@ -6,14 +6,19 @@ import Image from "next/image";
 import { portfolio } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
-export function ProfilePortrait({ className, preload = false }: { className?: string; preload?: boolean }) {
+export function ProfilePortrait({ className, preload = false, noGlow = false }: { className?: string; preload?: boolean; noGlow?: boolean }) {
   return (
     <div className={cn("relative mx-auto w-full max-w-md", className)}>
-      <div className="pointer-events-none absolute -inset-7 rounded-[3rem] bg-violet-600/18 blur-3xl" />
+      {!noGlow && <div className="pointer-events-none absolute -inset-7 rounded-[3rem] bg-violet-600/18 blur-3xl" />}
       <motion.div
-        whileHover={{ y: -6, rotate: 1, scale: 1.012 }}
+        whileHover={noGlow ? undefined : { y: -6, rotate: 1, scale: 1.012 }}
         transition={{ type: "spring", stiffness: 260, damping: 24 }}
-        className="relative aspect-square rounded-[2.25rem] bg-gradient-to-br from-violet-400 via-blue-500 to-cyan-300 p-px shadow-[0_28px_90px_rgba(0,0,0,.34),0_0_70px_rgba(124,58,237,.28)]"
+        className={cn(
+          "relative aspect-square rounded-[2.25rem]",
+          noGlow
+            ? "border border-white/[.12] bg-[#0a0d1f]"
+            : "bg-gradient-to-br from-violet-400 via-blue-500 to-cyan-300 p-px shadow-[0_28px_90px_rgba(0,0,0,.34),0_0_70px_rgba(124,58,237,.28)]",
+        )}
       >
         <div className="relative size-full overflow-hidden rounded-[calc(2.25rem-1px)] border-[9px] border-[#070a18] bg-[#080b1b]">
           <Image

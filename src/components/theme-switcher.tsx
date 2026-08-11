@@ -6,9 +6,10 @@ import { useHeroTheme, type HeroTheme } from "@/components/hero-theme-provider";
 import { cn } from "@/lib/utils";
 
 const options: { value: HeroTheme; label: string; description: string }[] = [
-  { value: "reactbits", label: "Aurora", description: "Classic gradient background" },
+  { value: "Halo", label: "Aurora", description: "Classic gradient background" },
   { value: "pillar", label: "Monolith", description: "Light pillar with dot field" },
   { value: "lightfall", label: "Starfall", description: "Falling light streaks tunnel" },
+  { value: "rays", label: "Beacon", description: "Radiating light rays from above" },
 ];
 
 export function ThemeSwitcher() {
@@ -35,7 +36,7 @@ export function ThemeSwitcher() {
         <WandSparkles className="size-[17px] transition-transform duration-300 group-hover:rotate-12" />
       </button>
       {open && (
-        <div className="absolute right-[-8px] top-[calc(100%+10px)] z-50 w-52 rounded-2xl border border-white/[.12] bg-[#191722] p-2.5 shadow-[0_22px_60px_rgba(0,0,0,.55),0_0_30px_rgba(179,0,179,.18)]">
+        <div className="fixed right-3 top-[4.75rem] z-50 w-52 rounded-2xl border border-white/[.12] bg-[#191722] p-2.5 shadow-[0_22px_60px_rgba(0,0,0,.55),0_0_30px_rgba(179,0,179,.18)]">
           <div className="mb-2 flex items-center justify-between"><span className="font-mono text-[9px] uppercase tracking-[.16em] text-slate-300">theme=</span><span className="font-mono text-[9px] text-slate-500">&quot;{theme}&quot;</span></div>
           <div className="flex flex-col gap-1">
             {options.map((option) => (

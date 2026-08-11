@@ -14,6 +14,7 @@ import { useHeroTheme } from "@/components/hero-theme-provider";
 const LightPillar = dynamic(() => import("@/components/light-pillar"), { ssr: false });
 const DotField = dynamic(() => import("@/components/dot-field"), { ssr: false });
 const Lightfall = dynamic(() => import("@/components/lightfall"), { ssr: false });
+const LightRays = dynamic(() => import("@/components/ui/light-rays").then((module) => module.LightRays), { ssr: false });
 
 function hexToRgb(hex: string) {
   const value = hex.replace("#", "");
@@ -55,7 +56,7 @@ export function Hero() {
 
   return (
     <section ref={heroRef} id="home" className="relative flex min-h-screen scroll-mt-20 items-center overflow-hidden px-4 pb-18 pt-28 sm:px-6 lg:pt-32">
-      {theme === "reactbits" && <ReactBitsHeroBackground accentColor={accentColor} />}
+      {theme === "Halo" && <ReactBitsHeroBackground accentColor={accentColor} />}
       {theme === "pillar" && (
         <>
           <LightPillar
@@ -107,6 +108,25 @@ export function Hero() {
             mouseInteraction={true}
             mouseStrength={0.5}
             mouseRadius={0.6}
+          />
+        </div>
+      )}
+      {theme === "rays" && (
+        <div className="absolute inset-0">
+          <LightRays
+            raysOrigin="top-center"
+            raysColor="#ffffff"
+            raysSpeed={1}
+            lightSpread={0.5}
+            rayLength={3.0}
+            pulsating
+            fadeDistance={1.0}
+            saturation={1.4}
+            followMouse
+            mouseInfluence={0.12}
+            noiseAmount={0.03}
+            distortion={0.05}
+            opacity={1.6}
           />
         </div>
       )}
@@ -168,7 +188,7 @@ export function Hero() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, x: 28, scale: .97 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: 1, delay: .2, ease: [0.16, 1, 0.3, 1] }} className="flex w-full min-w-0 justify-center lg:pt-4">
-          <ProfilePortrait preload className="max-w-[34rem]" />
+          <ProfilePortrait preload noGlow={theme === "rays"} className="max-w-[34rem]" />
         </motion.div>
       </div>
     </section>
