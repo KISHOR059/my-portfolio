@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import { ArrowRight, Download, Radio, Sparkles } from "lucide-react";
 import { ProfilePortrait } from "@/components/profile-portrait";
@@ -13,6 +13,7 @@ import { useHeroTheme } from "@/components/hero-theme-provider";
 
 const LightPillar = dynamic(() => import("@/components/light-pillar"), { ssr: false });
 const DotField = dynamic(() => import("@/components/dot-field"), { ssr: false });
+const Lightfall = dynamic(() => import("@/components/lightfall"), { ssr: false });
 
 function hexToRgb(hex: string) {
   const value = hex.replace("#", "");
@@ -46,6 +47,11 @@ export function Hero() {
   const calmMotion = mobile || reducedMotion || !heroInView;
   const { accentColor } = useAccentColor();
   const { theme } = useHeroTheme();
+  const lightfallColors = useMemo(
+    () => [mixHex(accentColor, "#ffffff", 0.65), accentColor, mixHex(accentColor, "#ffffff", 0.25)],
+    [accentColor],
+  );
+  const lightfallBackground = useMemo(() => mixHex(accentColor, "#000000", 0.75), [accentColor]);
 
   return (
     <section ref={heroRef} id="home" className="relative flex min-h-screen scroll-mt-20 items-center overflow-hidden px-4 pb-18 pt-28 sm:px-6 lg:pt-32">
@@ -66,20 +72,43 @@ export function Hero() {
             interactive={false}
             mixBlendMode="screen"
           />
-          <DotField
-            className="pointer-events-none absolute inset-0 hidden md:block"
-            dotRadius={1.5}
-            dotSpacing={14}
-            cursorRadius={500}
-            cursorForce={0.1}
-            bulgeOnly
-            bulgeStrength={67}
-            sparkle={false}
-            waveAmplitude={0}
-            gradientFrom={`rgba(${hexToRgb(accentColor)}, 0.62)`}
-            gradientTo={`rgba(${hexToRgb(accentColor)}, 0.46)`}
-          />
+          <div className="absolute inset-0 hidden md:block">
+            <DotField
+              className="pointer-events-none"
+              dotRadius={1.5}
+              dotSpacing={14}
+              cursorRadius={500}
+              cursorForce={0.1}
+              bulgeOnly
+              bulgeStrength={67}
+              sparkle={false}
+              waveAmplitude={0}
+              gradientFrom={`rgba(${hexToRgb(accentColor)}, 0.62)`}
+              gradientTo={`rgba(${hexToRgb(accentColor)}, 0.46)`}
+            />
+          </div>
         </>
+      )}
+      {theme === "lightfall" && (
+        <div className="absolute inset-0">
+          <Lightfall
+            colors={lightfallColors}
+            backgroundColor={lightfallBackground}
+            speed={1}
+            streakCount={8}
+            streakWidth={1}
+            streakLength={1}
+            glow={1}
+            density={0.2}
+            twinkle={1}
+            zoom={2}
+            backgroundGlow={1}
+            opacity={1}
+            mouseInteraction={true}
+            mouseStrength={0.5}
+            mouseRadius={0.6}
+          />
+        </div>
       )}
       <div className="relative z-10 mx-auto grid w-full max-w-[82.75rem] items-start gap-12 lg:grid-cols-2 lg:gap-5 xl:gap-8">
         <motion.div initial="hidden" animate="visible" transition={{ delayChildren: .08, staggerChildren: .1 }} className="flex max-w-2xl flex-col items-center gap-5 text-center lg:items-start lg:pt-5 lg:text-left">

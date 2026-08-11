@@ -97,7 +97,7 @@ export function Navbar() {
           <ColorPalette />
           </div>
 
-          <span className="ml-auto mr-2 lg:hidden"><ThemeSwitcher /><ColorPalette /></span>
+          <span className="ml-auto mr-2 flex items-center gap-2 lg:hidden"><ThemeSwitcher /><ColorPalette /></span>
           <button
             className="flex size-9 flex-col items-center justify-center gap-1 rounded-[10px] border border-white/[.08] bg-[#120f17]/50 p-2.5 text-white shadow-[0_2px_16px_rgba(0,0,0,.18)] backdrop-blur-2xl lg:hidden"
             onClick={() => setOpen((value) => !value)}
