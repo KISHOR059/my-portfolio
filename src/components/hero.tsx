@@ -15,6 +15,7 @@ const LightPillar = dynamic(() => import("@/components/light-pillar"), { ssr: fa
 const DotField = dynamic(() => import("@/components/dot-field"), { ssr: false });
 const Lightfall = dynamic(() => import("@/components/lightfall"), { ssr: false });
 const LightRays = dynamic(() => import("@/components/ui/light-rays").then((module) => module.LightRays), { ssr: false });
+const SoftAurora = dynamic(() => import("@/components/soft-aurora"), { ssr: false });
 
 function hexToRgb(hex: string) {
   const value = hex.replace("#", "");
@@ -130,6 +131,26 @@ export function Hero() {
           />
         </div>
       )}
+      {theme === "softAurora" && (
+        <div className="absolute inset-0">
+          <SoftAurora
+            speed={0.6}
+            scale={1.5}
+            brightness={1.0}
+            color1="#f7f7f7"
+            color2="#e100ff"
+            noiseFrequency={2.5}
+            noiseAmplitude={1.0}
+            bandHeight={0.5}
+            bandSpread={1.0}
+            octaveDecay={0.1}
+            layerOffset={0}
+            colorSpeed={1.0}
+            enableMouseInteraction={true}
+            mouseInfluence={0.25}
+          />
+        </div>
+      )}
       <div className="relative z-10 mx-auto grid w-full max-w-[82.75rem] items-start gap-12 lg:grid-cols-2 lg:gap-5 xl:gap-8">
         <motion.div initial="hidden" animate="visible" transition={{ delayChildren: .08, staggerChildren: .1 }} className="flex max-w-2xl flex-col items-center gap-5 text-center lg:items-start lg:pt-5 lg:text-left">
           <motion.div variants={item} transition={{ duration: .7, ease: [0.16, 1, 0.3, 1] }} className="inline-flex items-center gap-2 rounded-xl border border-white/[.09] bg-[#120f17]/55 p-1 pr-3 font-mono text-[10px] uppercase text-slate-300 shadow-[inset_0_1px_0_rgba(255,255,255,.05)] backdrop-blur-2xl sm:text-xs">
@@ -188,7 +209,7 @@ export function Hero() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, x: 28, scale: .97 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: 1, delay: .2, ease: [0.16, 1, 0.3, 1] }} className="flex w-full min-w-0 justify-center lg:pt-4">
-          <ProfilePortrait preload noGlow={theme === "rays"} className="max-w-[34rem]" />
+          <ProfilePortrait preload noGlow={theme === "rays" || theme === "softAurora"} className="max-w-[34rem]" />
         </motion.div>
       </div>
     </section>

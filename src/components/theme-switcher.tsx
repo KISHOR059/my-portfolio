@@ -6,10 +6,11 @@ import { useHeroTheme, type HeroTheme } from "@/components/hero-theme-provider";
 import { cn } from "@/lib/utils";
 
 const options: { value: HeroTheme; label: string; description: string }[] = [
-  { value: "Halo", label: "Aurora", description: "Classic gradient background" },
+  { value: "Halo", label: "Halo", description: "Classic gradient background" },
   { value: "pillar", label: "Monolith", description: "Light pillar with dot field" },
   { value: "lightfall", label: "Starfall", description: "Falling light streaks tunnel" },
   { value: "rays", label: "Beacon", description: "Radiating light rays from above" },
+  { value: "softAurora", label: "Soft Aurora", description: "Silky animated aurora glow" },
 ];
 
 export function ThemeSwitcher() {

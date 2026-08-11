@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, type ReactNode } from "react";
 
-export type HeroTheme = "Halo" | "pillar" | "lightfall" | "rays";
+export type HeroTheme = "Halo" | "pillar" | "lightfall" | "rays" | "softAurora";
 
 type HeroThemeContextValue = { theme: HeroTheme; setTheme: (theme: HeroTheme) => void };
 const HeroThemeContext = createContext<HeroThemeContextValue | null>(null);
