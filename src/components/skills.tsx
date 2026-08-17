@@ -175,10 +175,11 @@ function SkillCell({
                 ease: [0.16, 1, 0.3, 1],
               }}
               className={cn(
-                "inline-flex cursor-default items-center gap-1.5 rounded-lg border font-mono text-[11.5px] font-medium transition-all duration-300 px-3 py-1.5",
+                "inline-flex cursor-default items-center gap-1.5 rounded-lg border font-mono text-[11.5px] font-medium px-3 py-1.5 transition-[background-color,border-color,color,box-shadow] duration-300",
                 config.pillBase,
                 config.pillHover,
               )}
+              style={{ willChange: "transform, opacity" }}
             >
               <span className={cn("size-1.5 shrink-0 rounded-full", config.dotClass)} />
               {skill}

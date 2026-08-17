@@ -22,6 +22,7 @@ export function Reveal({ children, className, delay = 0 }: { children: ReactNode
         ease: [0.16, 1, 0.3, 1],
         opacity: { duration: 0.58, delay },
       }}
+      style={{ willChange: "transform, opacity" }}
     >
       {children}
     </motion.div>
