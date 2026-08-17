@@ -3,10 +3,13 @@
 import { motion } from "framer-motion";
 import { Code2, Coffee } from "lucide-react";
 import Image from "next/image";
+import { useHeroTheme } from "@/components/hero-theme-provider";
 import { portfolio } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
 export function ProfilePortrait({ className, preload = false, noGlow = false }: { className?: string; preload?: boolean; noGlow?: boolean }) {
+  const { showProfilePic } = useHeroTheme();
+
   return (
     <div className={cn("relative mx-auto w-full max-w-md", className)}>
       {!noGlow && <div className="pointer-events-none absolute -inset-7 rounded-[3rem] bg-violet-600/18 blur-3xl" />}
@@ -21,14 +24,20 @@ export function ProfilePortrait({ className, preload = false, noGlow = false }: 
         )}
       >
         <div className="relative size-full overflow-hidden rounded-[calc(2.25rem-1px)] border-[9px] border-[#070a18] bg-[#080b1b]">
-          <Image
-            src={portfolio.profileImage}
-            alt="Portrait of Kishor"
-            fill
-            preload={preload}
-            sizes="(max-width: 640px) 92vw, (max-width: 1024px) 28rem, 42vw"
-            className="object-cover object-center"
-          />
+          {showProfilePic ? (
+            <Image
+              src={portfolio.profileImage}
+              alt="Portrait of Kishor"
+              fill
+              preload={preload}
+              sizes="(max-width: 640px) 92vw, (max-width: 1024px) 28rem, 42vw"
+              className="object-cover object-center"
+            />
+          ) : (
+            <div className="absolute inset-0 grid place-items-center bg-[#070a18]/40">
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-slate-500 animate-pulse">[Profile Hidden]</span>
+            </div>
+          )}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050816]/75 via-transparent to-violet-950/10" />
           <span className="pointer-events-none absolute left-4 top-4 size-8 border-l border-t border-violet-200/60" />
           <span className="pointer-events-none absolute bottom-4 right-4 size-8 border-b border-r border-cyan-200/60" />

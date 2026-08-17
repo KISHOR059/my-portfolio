@@ -14,7 +14,7 @@ const options: { value: HeroTheme; label: string; description: string }[] = [
 ];
 
 export function ThemeSwitcher() {
-  const { theme, setTheme } = useHeroTheme();
+  const { theme, setTheme, showProfilePic, setShowProfilePic } = useHeroTheme();
   const [open, setOpen] = useState(false);
   const pickerRef = useRef<HTMLDivElement>(null);
 
@@ -67,6 +67,28 @@ export function ThemeSwitcher() {
               </button>
             ))}
           </div>
+
+          {process.env.NODE_ENV === "development" && (
+            <>
+              <div className="my-2 h-px bg-white/[.08]" />
+              <div className="mb-1.5 flex items-center justify-between">
+                <span className="font-mono text-[9px] uppercase tracking-[.16em] text-amber-400">dev_settings=</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowProfilePic(!showProfilePic)}
+                className={cn(
+                  "flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left font-mono text-[10px] transition-colors",
+                  showProfilePic
+                    ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20"
+                    : "border-red-500/20 bg-red-500/10 text-red-300 hover:bg-red-500/20"
+                )}
+              >
+                <span>Profile Photo</span>
+                <span className="font-bold">{showProfilePic ? "ON" : "OFF"}</span>
+              </button>
+            </>
+          )}
         </div>
       )}
     </div>
