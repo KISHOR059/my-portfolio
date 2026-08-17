@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
 export type HeroTheme = "Halo" | "pillar" | "lightfall" | "rays" | "softAurora";
 
@@ -9,12 +9,31 @@ type HeroThemeContextValue = {
   setTheme: (theme: HeroTheme) => void;
   showProfilePic: boolean;
   setShowProfilePic: (val: boolean) => void;
+  autoRotate: boolean;
+  setAutoRotate: (val: boolean) => void;
+  autoRotateInterval: number;
+  setAutoRotateInterval: (val: number) => void;
 };
 const HeroThemeContext = createContext<HeroThemeContextValue | null>(null);
 
 export function HeroThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<HeroTheme>("pillar");
   const [showProfilePic, setShowProfilePic] = useState(true);
+  const [autoRotate, setAutoRotate] = useState(false);
+  const [autoRotateInterval, setAutoRotateInterval] = useState(8);
+
+  useEffect(() => {
+    if (!autoRotate) return;
+    const themes: HeroTheme[] = ["pillar", "Halo", "lightfall", "rays", "softAurora"];
+    const intervalId = setInterval(() => {
+      setTheme((currentTheme) => {
+        const currentIndex = themes.indexOf(currentTheme);
+        const nextIndex = (currentIndex + 1) % themes.length;
+        return themes[nextIndex];
+      });
+    }, autoRotateInterval * 1000);
+    return () => clearInterval(intervalId);
+  }, [autoRotate, autoRotateInterval, theme]);
 
   // In production, always force it to true; only allow toggling in dev.
   const isDev = process.env.NODE_ENV === "development";
@@ -27,6 +46,10 @@ export function HeroThemeProvider({ children }: { children: ReactNode }) {
         setTheme,
         showProfilePic: actualShowProfilePic,
         setShowProfilePic,
+        autoRotate,
+        setAutoRotate,
+        autoRotateInterval,
+        setAutoRotateInterval,
       }}
     >
       {children}

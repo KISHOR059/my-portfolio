@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Check, WandSparkles } from "lucide-react";
 import { useHeroTheme, type HeroTheme } from "@/components/hero-theme-provider";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const options: { value: HeroTheme; label: string; description: string }[] = [
   { value: "pillar", label: "Monolith", description: "Light pillar with dot field" },
@@ -14,7 +15,16 @@ const options: { value: HeroTheme; label: string; description: string }[] = [
 ];
 
 export function ThemeSwitcher() {
-  const { theme, setTheme, showProfilePic, setShowProfilePic } = useHeroTheme();
+  const {
+    theme,
+    setTheme,
+    showProfilePic,
+    setShowProfilePic,
+    autoRotate,
+    setAutoRotate,
+    autoRotateInterval,
+    setAutoRotateInterval,
+  } = useHeroTheme();
   const [open, setOpen] = useState(false);
   const pickerRef = useRef<HTMLDivElement>(null);
 
@@ -65,6 +75,53 @@ export function ThemeSwitcher() {
             ))}
           </div>
 
+          <div className="my-2 h-px bg-white/[.08]" />
+          <div className="flex items-center justify-between px-1 py-1">
+            <div className="flex flex-col">
+              <span className="text-[10px] font-medium text-slate-300">Auto Cycle</span>
+              <span className="text-[8px] text-slate-500">Rotate themes</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setAutoRotate(!autoRotate)}
+              className={cn(
+                "relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
+                autoRotate ? "bg-violet-500" : "bg-slate-700"
+              )}
+              aria-label="Toggle auto theme rotation"
+            >
+              <span
+                className={cn(
+                  "pointer-events-none inline-block size-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out",
+                  autoRotate ? "translate-x-4" : "translate-x-0"
+                )}
+              />
+            </button>
+          </div>
+
+          {autoRotate && (
+            <div className="mt-2 flex items-center justify-between gap-1 rounded-xl bg-white/[0.03] p-1.5 px-2">
+              <span className="font-mono text-[8px] uppercase tracking-wider text-slate-400">Delay</span>
+              <div className="flex gap-1">
+                {[5, 8, 15].map((seconds) => (
+                  <button
+                    key={seconds}
+                    type="button"
+                    onClick={() => setAutoRotateInterval(seconds)}
+                    className={cn(
+                      "rounded px-1.5 py-0.5 font-mono text-[9px] font-semibold transition-colors",
+                      autoRotateInterval === seconds
+                        ? "bg-violet-500/25 text-violet-300"
+                        : "text-slate-500 hover:bg-white/[0.05] hover:text-white"
+                    )}
+                  >
+                    {seconds}s
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {process.env.NODE_ENV === "development" && (
             <>
               <div className="my-2 h-px bg-white/[.08]" />
@@ -85,6 +142,18 @@ export function ThemeSwitcher() {
                 <span className="font-bold">{showProfilePic ? "ON" : "OFF"}</span>
               </button>
             </>
+          )}
+
+          {autoRotate && (
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden rounded-b-2xl">
+              <motion.div
+                key={`${theme}-${autoRotateInterval}`}
+                className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 origin-left"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: autoRotateInterval, ease: "linear" }}
+              />
+            </div>
           )}
         </div>
       )}
